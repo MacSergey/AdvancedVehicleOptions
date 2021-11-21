@@ -1,3 +1,10 @@
+# CS-AdvancedVehicleOptions 1.9.6 (in prepartion)
+* Fixed - incorporated bug fixes by Kryzchu1245
+
+# CS-AdvancedVehicleOptions 1.9.5
+* Updated Bus Trailer List with +80 more vehicles
+* Compability towards NoBigTuck Beta testing (looks for Steam ID)
+
 # CS-AdvancedVehicleOptions 1.9.4
 
 Passenger Helicopter Fix:
