@@ -12,6 +12,12 @@ namespace AdvancedVehicleOptionsUID.Compatibility
                 .Any(plugin => plugin.publishedFileID.AsUInt64 == 2069057130);
         }
 
+        public static bool IsNBTBetaActive()
+        {
+            return PluginManager.instance.GetPluginsInfo().Where(x => x.isEnabled)
+                .Any(plugin => plugin.publishedFileID.AsUInt64 == 2513186434);
+        }
+
         public static List<string> AVOFields = new List<string>
         {
             "m_isLargeVehicle",
