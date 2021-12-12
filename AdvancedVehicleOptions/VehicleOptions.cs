@@ -536,6 +536,9 @@ namespace AdvancedVehicleOptionsUID
                 ai = m_prefab.m_vehicleAI as DisasterResponseVehicleAI;
                 if (ai != null) { ((DisasterResponseVehicleAI)ai).m_efficiency = value; return; }
 
+                ai = m_prefab.m_vehicleAI as PassengerHelicopterAI;
+                if (ai != null) { ((PassengerHelicopterAI)ai).m_passengerCapacity = value; return; }
+
                 ai = m_prefab.m_vehicleAI as FishingBoatAI;
                 if (ai != null) { ((FishingBoatAI)ai).m_capacity = value; return; }
             }
@@ -776,6 +779,18 @@ namespace AdvancedVehicleOptionsUID
                         if (steamID == TrailerRef.isBus[i])
                             return true;
                     }
+
+                    for (int i = 0; i < TrailerRef.isTrolley.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isTrolley[i])
+                            return true;
+                    }
+
+                    for (int i = 0; i < TrailerRef.isPark.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isPark[i])
+                            return true;
+                    }
                 }
                 return false;
             }
@@ -800,27 +815,34 @@ namespace AdvancedVehicleOptionsUID
 				            return Category.TransportBus;			
 					}
 
-//					Preparation for Ninjanoobslayers upcoming Vehicle/Trailer combinations
-//					
-//					for (int i=0; i < TrailerRef.isPolice.Length; i++) 
-//					{            
-//						if (steamID == TrailerRef.isPolice[i])
-//				            return Category.Police;			
-//					}
-//					
-//					for (int i=0; i < TrailerRef.isFire.Length; i++) 
-//					{            
-//						if (steamID == TrailerRef.isFire[i])
-//				            return Category.FireSafety;			
-//					}
-//					
-//					for (int i=0; i < TrailerRef.isTrolley.Length; i++) 
-//					{            
-//						if (steamID == TrailerRef.isTrolley[i])
-//				            return Category.TrolleyBus;			
-//					}
-//
-					for (int i=0; i < TrailerRef.isOil.Length; i++) 
+                    //	Preparation for Ninjanoobslayers upcoming Vehicle/Trailer combinations
+                    //				
+                    //	for (int i=0; i < TrailerRef.isPolice.Length; i++) 
+                    //		{            
+                    //	 	    if (steamID == TrailerRef.isPolice[i])
+                    //	            return Category.Police;			
+                    //	    }
+                    //	
+                    				
+                    for (int i = 0; i < TrailerRef.isFire.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isFire[i])
+                            return Category.FireSafety;
+                    }
+
+                    for (int i = 0; i < TrailerRef.isPark.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isPark[i])
+                            return Category.TransportTours;
+                    }
+
+                    for (int i = 0; i < TrailerRef.isTrolley.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isTrolley[i])
+                            return Category.TrolleyBus;
+                    }
+
+                    for (int i=0; i < TrailerRef.isOil.Length; i++) 
 					{            
 						if (steamID == TrailerRef.isOil[i])
 				            return Category.Oil;			
@@ -837,6 +859,13 @@ namespace AdvancedVehicleOptionsUID
                         if (steamID == TrailerRef.isOre[i])
                             return Category.Ore;
                     }
+
+                    for (int i = 0; i < TrailerRef.isPostal.Length; i++)
+                    {
+                        if (steamID == TrailerRef.isPostal[i])
+                            return Category.TransportPost;
+                    }
+
 
                     for (int i = 0; i < TrailerRef.isGeneric.Length; i++)
                     {

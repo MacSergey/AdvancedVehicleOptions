@@ -143,17 +143,17 @@ namespace AdvancedVehicleOptionsUID
                 });
 
                 checkBox.tooltip = "If enabled, Delivery Trucks can be tagged as Large Vehicles.\n" +
-                                   "Dispatch will be blocked by No Big Trucks (by MacSergey).\n\n" +
+                                   "Dispatch will be blocked by No Big Trucks (by MacSergey)." +
                                    "Warning: Experimental feature and may have impact on the simulation.";
                 //True, if AVO shall be enabled to classify Generic Industry vehicles as Large Vehicles, so No Big Trucks can suppress the dispatch to small buildings.
 
-                if (!NoBigTruckCompatibilityPatch.IsNBTActive())
+                if (!NoBigTruckCompatibilityPatch.IsNBTActive() | !NoBigTruckCompatibilityPatch.IsNBTBetaActive())
                 {
                     checkBox.enabled = false;   //Do not show the option Checkbox, if No Big Trucks is not active.
                 }
 
 // Add a Spacer
-                group_compatibility.AddSpace(20);
+                group_compatibility.AddSpace(2);
 
 // Add Trailer Compatibility Reference
 
@@ -187,7 +187,7 @@ namespace AdvancedVehicleOptionsUID
             }
         }
 
-        public const string version = "1.9.3";
+        public const string version = "1.9.6";
     }
 
     public class AdvancedVehicleOptionsUIDLoader : LoadingExtensionBase
