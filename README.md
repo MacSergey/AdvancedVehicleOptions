@@ -1,4 +1,4 @@
-# CS-AdvancedVehicleOptions 1.9.6 (in prepartion)
+# CS-AdvancedVehicleOptions 1.9.6
 * Fixed - incorporated bug fixes by Kryzchu124
 
 # CS-AdvancedVehicleOptions 1.9.5
