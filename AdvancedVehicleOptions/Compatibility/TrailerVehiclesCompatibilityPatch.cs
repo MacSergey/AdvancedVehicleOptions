@@ -5,12 +5,13 @@ using ColossalFramework.Plugins;
 // Vehicle Trailer References - History		1.9.1	09 Apr 2020 / Initial
 //                                          1.9.3   27 Apr 2020 / Removed 1352419789 Peterbilt 362 w/ Curtainside Van fixed by author
 //                                                  08 May 2020 / Added all Shroomblaze vehicles, plus missing ones from D3S / Danz
+//										    1.9.5   13 May 2021 / Added +50 vehicles released since May 2020, activated Fire, Park
 
 namespace AdvancedVehicleOptionsUID.Compatibility
 {
-    public class TrailerRef
-    {
-		public static string Revision = "08 May 2020 / 1.9.3";
+	public class TrailerRef
+	{
+		public static string Revision = "13 May 2021 / 1.9.5";
 
 		public static string[] isBus = {        "450635180",
 												"2086330205",
@@ -62,13 +63,80 @@ namespace AdvancedVehicleOptionsUID.Compatibility
 												"1295660917",
 												"1477096003",
 												"1288816930",
-												"1326099133" };
+												"1326099133",
+												"2467544679",
+												"2452447611",
+												"2139215532",
+												"2118140523",
+												"2117991285",
+												"1860248761",
+												"1824939237",
+												"1994579347",
+												"1994575527",
+												"1994577146",
+												"1910202310",
+												"1910200296",
+												"1910204728",
+												"2374323988",
+												"2091098447",
+												"2283005836",
+												"2194293875",
+												"2244547186",
+												"2452225400",
+												"2429796181",
+												"2446272566",
+												"2452225744",
+												"2429798030",
+												"2446275422",
+												"2023434974",
+												"2023438332",
+												"2023441750",
+												"2023443705",
+												"1941241521",
+												"1941240145",
+												"2074913055",
+												"2076032599",
+												"2436010042",
+												"2436010536",
+												"2101148487",
+												"2106539278",
+												"1941558235",
+												"1966257014",
+												"2275292315",
+												"2475451792",
+												"2484038430",
+												"2485575789",
+												"2484899192",
+												"2485767932",
+												"2485679321"};
 
 		//		public static string[] isPolice = { "SteamID" };
 
-		//		public static string[] isFire = { "SteamID" };
+		public static string[] isFire = { "2445243071" };
 
-		//		public static string[] isTrolley = { "SteamID" };
+		public static string[] isPark = { "2275291529" };
+
+		public static string[] isTrolley = { "2351342952",
+													 "2351346836",
+													 "2424593897",
+													 "2283799297",
+													 "2284440585",
+													 "2275766752",
+													 "2275767329",
+													 "2035803785",
+													 "2279825726",
+													 "2279827663",
+													 "2419435756",
+													 "2419436313",
+													 "2419436701",
+													 "2419437011",
+													 "2075674554",
+													 "2437102789",
+													 "2437103474",
+													 "2391886048",
+													 "2343078700",
+													 "2425429349" };
+																	
 
 		public static string[] isOil = {        "532884994",
 												"479297663",
@@ -79,6 +147,8 @@ namespace AdvancedVehicleOptionsUID.Compatibility
 												"479297663" };
 
 		public static string[] isOre = {		"479262089" };
+
+		public static string[] isPostal = { "2106928450" };
 
 		public static string[] isForestry = {	"1805346788",
 												"677028035",
@@ -104,7 +174,8 @@ namespace AdvancedVehicleOptionsUID.Compatibility
 												"478721764",
 												"486689674",
 												"486689900",
-												"495598323" };
-
+												"495598323",
+												"2106925327",
+												"2106927651" };
 	}
 }
