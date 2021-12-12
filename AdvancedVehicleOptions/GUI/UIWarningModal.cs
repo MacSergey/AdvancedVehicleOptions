@@ -116,7 +116,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                     }, new AnimatedFloat(0f, 1f, 0.7f, EasingType.CubicEaseOut));
                 }
             }
-            else if (modalEffect != null)
+            else if (modalEffect != null && !UIView.HasModalInput())
             {
                 ValueAnimator.Animate("NewThemeModalEffect", delegate(float val)
                 {
