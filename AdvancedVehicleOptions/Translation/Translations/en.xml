@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="en" ReadableName="English">
+  <Translations>
+<!-- Text Strings in Mod Options --> 	  
+    <Translation ID="AVO_DESC" String="Customize your vehicles (supports Cities Skylines Sunset Harbor 1.13.3-f9)."/> 
+	<Translation ID="TRN_CHOICE" String="Set Language"/>
+    <Translation ID="TRN_TOOLTIP" String="Select the Language to be used for this mod. (default: Use Game Language)&#xA;&#xA;Requires restart of the game."/>	
+    <Translation ID="TRN_SYS" String="Use Game language" />
+	<Translation ID="KEY_KEY" String="In-Game Hotkey"/>
+    <Translation ID="KEY_KEY_TT" String="Define a hotkey for the AVO user interface."/>
+    <Translation ID="KEY_PRS" String="Press any key"/>
+	<Translation ID="AVO_OPT_GEN" String="General Settings"/>	
+	<Translation ID="AVO_OPT_GEN_ASAVE" String="Enable Autosaving for Vehicle Configuration Data"/>
+	<Translation ID="AVO_OPT_GEN_ASAVE_TT" String="If enabled, all changes on vehicles will be saved,&#xA;, once data entry is finalized. (default: enabled)"/>
+    <Translation ID="AVO_OPT_GEN_DEBUG" String="Enable debug messages logging"/>
+	<Translation ID="AVO_OPT_GEN_DEBUG_TT" String="If enabled, mod debug messages will be logged. (default: enabled)"/>
+    <Translation ID="AVO_OPT_GEN_GUI" String="Hide the In-Game toolbar button"/>
+	<Translation ID="AVO_OPT_GEN_GUI_TT" String="Hide the UI button from the main toolbar. The AVO user interface&#xA;can be accessed with the Hotkey anytime. (default: disabled - show UI button)"/>
+    <Translation ID="AVO_OPT_GEN_SERVICE" String="Enable warning for no available services at map loading"/>
+	<Translation ID="AVO_OPT_GEN_SERVICE_TT" String="A warning is shown when game is started and city services do not have vehicles assigned. (default: enabled)"/>
+	<Translation ID="AVO_OPT_BAL" String="Gameplay and Balancing"/>	
+	<Translation ID="AVO_OPT_BAL_UNITS" String="Display Miles per Hour (mph) instead of Kilometer per Hour (km/h)"/>	
+	<Translation ID="AVO_OPT_BAL_UNITS_TT" String="Changes display of unit of speed from mph to km/h. (default: disabled - use km/h)"/>	
+	<Translation ID="AVO_OPT_BAL_EXT" String="Enable various values for non-cargo and non-passenger vehicles"/>	
+	<Translation ID="AVO_OPT_BAL_EXT_TT" String="Allows changes the Firefighting Rate and Capacity for Fire Safety, the&#xA;Crime Rate Capacity for Police Vehicles, the Maintenance and Pumping Rate&#xA;for Maintenance Vehicles. (default: disabled)&#xA;&#xA;Can de-balance the intended gameplay. Values are not documented."/>	
+	<Translation ID="AVO_OPT_COMP" String="Compatibility"/>	
+	<Translation ID="AVO_OPT_COMP_MODS" String="Display Compatibility Warnings for Mods"/>	
+	<Translation ID="AVO_OPT_COMP_MODS_TT" String="If enabled, settings which can be modified in Improved Public Transport&#xA;(by BloodyPenguin) and Transport Lines Manager (by Klyte) will be shown&#xA;with red warning color. Values should be edited in these mods only.&#xA;&#xA;If disabled, the coloring will not shown. (default: enabled)"/>		
+	<Translation ID="AVO_OPT_COMP_VCX" String="Vehicle/Asset Color Expander: Priority over AVO vehicle coloring"/>	
+	<Translation ID="AVO_OPT_COMP_VCX_TT" String="Permanent setting, if Vehicle Color Expander (by Klyte) is active.&#xA;The color management is controlled by Vehicle Color Expander.&#xA;&#xA;Values will be configured in Vehicle/Asset Color Expander. (default: permanent enabled)"/>	
+	<Translation ID="AVO_OPT_COMP_NBT" String="No Big Trucks: Classify Generic Industry vehicles as Large Vehicle"/>	
+	<Translation ID="AVO_OPT_COMP_NBT_TT" String="If enabled, Delivery Trucks can be tagged as Large Vehicles.&#xA;Dispatch will be blocked by No Big Trucks (by MacSergey). (default: enabled)"/>	
+    <Translation ID="AVO_OPT_COMP_TRL" String="Vehicle Trailer compatibility references last updated:"/>
+	<Translation ID="AVO_OPT_COMP_TRL_TT" String="This field shows the vehicle list revision date for the Bus, Trolley Bus, Fire and Police&#xA;trailers, which are in real life industry trailers, but have been re-categorized by AVO."/>
+	<Translation ID="AVO_OPT_SUP" String="Support"/>	
+	<Translation ID="AVO_OPT_SUP_WIKI" String="Open the Advanced Vehicle Options Wiki"/>	
+	<Translation ID="AVO_OPT_SUP_LOG" String="Open Cities:Skylines log folder (output_log.txt)"/>	
+	<Translation ID="AVO_MOD_CAPA" String="Capacity: "/>		
+	<Translation ID="AVO_MOD_BGUIDESC" String="Modify various Vehicle properties"/>	
+	
+<!-- Text Strings in Main --> 	
+	<Translation ID="AVO_MOD_AV01" String="Your configuration has been exported.&#xA;&#xA;The configuration file can be found here: "/>		
+    <Translation ID="AVO_MOD_AV02" String="The following services may not work correctly because no vehicles are enabled to spawn:&#xA;&#xA;"/>	
+
+<!-- Text Strings in Vehicle Options --> 	
+	<Translation ID="AVO_MOD_VO01" String="Fire Fighting Capacity: "/>		
+    <Translation ID="AVO_MOD_VO02" String="Criminal Capacity: "/>		
+    <Translation ID="AVO_MOD_VO03" String="Pumping Rate: "/>		
+    <Translation ID="AVO_MOD_VO04" String="Travel Distance: "/>		
+    <Translation ID="AVO_MOD_VO05" String="Fishing Rate: "/>		
+    <Translation ID="AVO_MOD_VO06" String="Unspecificed Capacity: "/>		
+    <Translation ID="AVO_MOD_VO07" String="Passenger Capacity: "/>	
+    <Translation ID="AVO_MOD_VO08" String="Cargo Capacity: "/>	
+    <Translation ID="AVO_MOD_VO09" String="Mail Capacity: "/>	
+    <Translation ID="AVO_MOD_VO10" String="Maintenance Capacity: "/>	
+    <Translation ID="AVO_MOD_VO11" String="Patient Capacity: "/>	
+    <Translation ID="AVO_MOD_VO12" String="Corpse Capacity: "/>	
+    <Translation ID="AVO_MOD_VO13" String="Crime Capacity Rate: "/>		
+	<Translation ID="AVO_MOD_VO14" String="Fire Fighting Rate: "/>		
+	<Translation ID="AVO_MOD_VO15" String="Efficency Rate: "/>		
+	
+<!-- Text Strings in  Main Panel --> 	
+	<Translation ID="AVO_MOD_MP00" String="All Vehicles"/>			
+	<Translation ID="AVO_MOD_MP01" String="Citizen - Cars"/>		
+	<Translation ID="AVO_MOD_MP02" String="Citizen - Bicycle"/>		
+	<Translation ID="AVO_MOD_MP03" String="Industry - Forestry"/>		
+	<Translation ID="AVO_MOD_MP04" String="Industry - Farming"/>
+	<Translation ID="AVO_MOD_MP05" String="Industry - Ore"/>
+	<Translation ID="AVO_MOD_MP06" String="Industry - Oil"/>
+	<Translation ID="AVO_MOD_MP07" String="Industry - Fishing"/>
+	<Translation ID="AVO_MOD_MP08" String="Industry - Delivery"/>
+	<Translation ID="AVO_MOD_MP09" String="Industry - Factories"/>
+	<Translation ID="AVO_MOD_MP10" String="Police"/>
+	<Translation ID="AVO_MOD_MP11" String="Prison"/>
+	<Translation ID="AVO_MOD_MP12" String="Fire Safety"/>
+	<Translation ID="AVO_MOD_MP13" String="Disaster Response"/>
+	<Translation ID="AVO_MOD_MP14" String="Healthcare"/>
+	<Translation ID="AVO_MOD_MP15" String="Deathcare"/>
+	<Translation ID="AVO_MOD_MP16" String="Garbage"/>
+	<Translation ID="AVO_MOD_MP17" String="Waste Transfer"/>
+	<Translation ID="AVO_MOD_MP18" String="Maintenance"/>
+	<Translation ID="AVO_MOD_MP19" String="Postal Service"/>
+	<Translation ID="AVO_MOD_MP20" String="Bus"/>
+	<Translation ID="AVO_MOD_MP21" String="Intercity Bus"/>
+	<Translation ID="AVO_MOD_MP22" String="Trolley Bus"/>
+	<Translation ID="AVO_MOD_MP23" String="Taxi"/>
+	<Translation ID="AVO_MOD_MP24" String="Metro"/>
+	<Translation ID="AVO_MOD_MP25" String="Tram"/>
+	<Translation ID="AVO_MOD_MP26" String="Monorail"/>
+	<Translation ID="AVO_MOD_MP27" String="Cable Car"/>
+	<Translation ID="AVO_MOD_MP28" String="Train - Cargo"/>
+	<Translation ID="AVO_MOD_MP29" String="Train - Passenger"/>
+	<Translation ID="AVO_MOD_MP30" String="Ship - Cargo"/>
+	<Translation ID="AVO_MOD_MP31" String="Ship - Cruise"/>
+	<Translation ID="AVO_MOD_MP32" String="Ship - Ferry"/>
+	<Translation ID="AVO_MOD_MP33" String="Plane - Cargo"/>
+	<Translation ID="AVO_MOD_MP34" String="Plane - Passenger"/>
+	<Translation ID="AVO_MOD_MP35" String="Local Air Traffic"/>
+	<Translation ID="AVO_MOD_MP36" String="Tourism + Tours"/>
+	<Translation ID="AVO_MOD_MP37" String="Launch Site"/>
+    <Translation ID="AVO_MOD_MP38" String="Natural"/>
+	<Translation ID="AVO_MOD_MP39" String="Select a category to display&#xA;Tipp: Use the mouse wheel to switch between categories faster."/>	
+	<Translation ID="AVO_MOD_MP40" String="Type the name of a vehicle type"/>
+	<Translation ID="AVO_MOD_MP41" String="Actions for Vehicle Configuration:"/>	
+	<Translation ID="AVO_MOD_MP42" String="Import"/>	
+	<Translation ID="AVO_MOD_MP43" String="Load an existing vehicle configuration"/>		
+	<Translation ID="AVO_MOD_MP44" String="Export"/>	
+	<Translation ID="AVO_MOD_MP45" String="Save the current vehicle configuration"/>		
+	<Translation ID="AVO_MOD_MP46" String="Reset All"/>	
+	<Translation ID="AVO_MOD_MP47" String="Reset full configuration"/>		
+	<Translation ID="AVO_MOD_MP48" String="Autosave active&#xA;for Vehicle Data"/>		
+	<Translation ID="AVO_MOD_MP49" String="Autosave of Vehicle Config Data is enabled.&#xA;All changes will be saved immediately to external configuration file."/>		
+	<Translation ID="AVO_MOD_MP50" String="Click here to cycle through the existing vehicles of that type.&#xA;Hold Shift Key down for zooming directly to vehicle."/>		
+	<Translation ID="AVO_MOD_MP51" String="Click here to remove the selected vehicle."/>		
+	<Translation ID="AVO_MOD_MP52" String="Confirm Reset Configuration"/>	
+	<Translation ID="AVO_MOD_MP53" String="Customized settings for all vehicles will be reset.&#xA;&#xA; Proceed with Configuration reset ?"/>	
+	<Translation ID="AVO_MOD_MP54" String="All vehicle configuration and customized settings&#xA; have been reset to the Game Defaults."/>	
+	<Translation ID="AVO_MOD_MP55" String="Search :"/>	
+	<Translation ID="AVO_MOD_MP56" String="Category :"/>		
+	
+
+<!-- Text Strings in Option Panel --> 	
+	<Translation ID="AVO_MOD_OP01" String="km/h"/>	
+	<Translation ID="AVO_MOD_OP02" String="mph"/>		
+	<Translation ID="AVO_MOD_OP03" String="&#xA;&#xA;Warning: Improved Public Transport is active&#xA;and may override this setting."/>	
+	<Translation ID="AVO_MOD_OP04" String="&#xA;&#xA;Warning: Transport Lines Manager is active&#xA;and may override this setting."/>	
+	<Translation ID="AVO_MOD_OP05" String="Actions for: "/>	
+	<Translation ID="AVO_MOD_OP06" String="Maximum speed: "/>	
+	<Translation ID="AVO_MOD_OP07" String="Change the maximum speed of the vehicle&#xA;Please note, that vehicles do not go beyond speed limits of the network they are used."/>	
+	<Translation ID="AVO_MOD_OP08" String="Acceleration/Brake/Turning: "/>	
+	<Translation ID="AVO_MOD_OP09" String="Change the vehicle acceleration factor;&#xA;Defines how fast the car accelerates."/>	
+	<Translation ID="AVO_MOD_OP10" String="Change the vehicle braking factor#xA;Defines how quick the car breaks."/>	
+	<Translation ID="AVO_MOD_OP11" String="Change the vehicle turning factor#xA;Defines how well the car corners"/>	
+	<Translation ID="AVO_MOD_OP12" String="Springs/Dampers"/>		
+	<Translation ID="AVO_MOD_OP13" String="Change the vehicle spring factor&#xA;Defines how much the suspension moves."/>	
+	<Translation ID="AVO_MOD_OP14" String="Change the vehicle damper factor&#xA;Defines how quickly the suspension returns to the default state."/>	
+	<Translation ID="AVO_MOD_OP15" String="Lean/Nod Multiplier: "/>	
+	<Translation ID="AVO_MOD_OP16" String="Change the vehicle lean multiplication factor&#xA;Defines how much the vehicle leans to the sides when turning."/>	
+	<Translation ID="AVO_MOD_OP17" String="Change the vehicle nod multiplication factor&#xA;Defines how much the vehicle nods forward/backward when braking or accelerating."/>	
+	<Translation ID="AVO_MOD_OP18" String="Enable Color variations:"/>	
+	<Translation ID="AVO_MOD_OP19" String="Enable color variations&#xA;A random color is chosen between the four following colors."/>	
+	<Translation ID="AVO_MOD_OP20" String="Colors are managed by Vehicle/Asset Color Expander"/>	
+	<Translation ID="AVO_MOD_OP21" String="Allow this vehicle to spawn"/>	
+	<Translation ID="AVO_MOD_OP22" String="Make sure you have at least one vehicle allowed to spawn for that category."/>
+	<Translation ID="AVO_MOD_OP23" String="Replace last car with engine"/>	
+	<Translation ID="AVO_MOD_OP24" String="Make the last car of this train be an engine."/>	
+	<Translation ID="AVO_MOD_OP25" String="Flag as Large Vehicle"/>	
+	<Translation ID="AVO_MOD_OP26" String="Prevent vehicles with trailer to deliver to small buildings.&#xA;&#xA;This is controlled by the No Big Trucks mod."/>	
+	<Translation ID="AVO_MOD_OP27" String="Change the capacity of the vehicle."/>	
+	<Translation ID="AVO_MOD_OP28" String="Special Capacity: "/>	
+	<Translation ID="AVO_MOD_OP29" String="Change special parameters of the vehicle."/>	
+	<Translation ID="AVO_MOD_OP30" String="If you do not know, what this value is:&#xA;Do not touch it!&#xA;&#xA;Click for User Guide: Special Capacity."/>	
+	<Translation ID="AVO_MOD_OP31" String="Manage Spawning in Transport Line Overview"/>	
+	<Translation ID="AVO_MOD_OP32" String="Open the Transport Line Overview and manage the vehicle spawning."/>	
+	<Translation ID="AVO_MOD_OP33" String="Click for User Guide: Spawn Control"/>	
+	<Translation ID="AVO_MOD_OP34" String="Bus trailers spawning is controlled by the main &#xA; Bus vehicle. Settings must be configured from &#xA; the Transport Line Overview panel."/>	
+	<Translation ID="AVO_MOD_OP35" String="Default Values"/>	
+	<Translation ID="AVO_MOD_OP36" String="Restore all values to default"/>	
+	<Translation ID="AVO_MOD_OP37" String="Global Actions for: "/>	
+	<Translation ID="AVO_MOD_OP38" String="Remove Driving"/>		
+	<Translation ID="AVO_MOD_OP39" String="Remove all driving vehicles of that type.&#xA;Hold the SHIFT key to remove all types."/>		
+	<Translation ID="AVO_MOD_OP40" String="Remove Parked"/>		
+	<Translation ID="AVO_MOD_OP41" String="Remove all parked vehicles of that type.&#xA;Hold the SHIFT key to remove all types."/>		
+	<Translation ID="AVO_MOD_OP42" String=" may not work correctly because no vehicles are allowed to spawn."/>		
+	
+<!-- Text Strings in GUI Warning Modal --> 	
+	<Translation ID="AVO_MOD_WM01" String="Warning"/>	
+
+  </Translations>
+</Language>
