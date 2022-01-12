@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="de" ReadableName="Deutsch">
+  <Translations>
+<!-- Text Strings in Mod Options --> 
+    <Translation ID="AVO_DESC" String="Ändere fahrzeugspezifische Werte (kompatibel mit Cities Skylines Sunset Harbor 1.13.3-f9)."/> 
+	<Translation ID="TRN_CHOICE" String="Sprache"/>
+    <Translation ID="TRN_TOOLTIP" String="Stellt die Sprache des Mods ein. (Standard: Einstellung des Spiels)&#xA;&#xA;Erfordert den Neustart des Spiels."/>	
+    <Translation ID="TRN_SYS" String="Spieleinstellung übernehmen" />
+	<Translation ID="KEY_KEY" String="Tastenkürzel im Spiel" />
+    <Translation ID="KEY_KEY_TT" String="Definiere einen Hotkey, um das AVO Interface zu aktivieren."/>	
+    <Translation ID="KEY_PRS" String="Beliebige Taste drücken" />	  
+	<Translation ID="AVO_OPT_GEN" String="Allgemeine Einstellungen"/>	
+	<Translation ID="AVO_OPT_GEN_ASAVE" String="Aktiviere automatisches Speichern für Änderungen an Fahrzeugdaten"/>
+	<Translation ID="AVO_OPT_GEN_ASAVE_TT" String="Falls aktiviert, werden alle Änderungen an Fahrzeugen bei Eingabe gespeichert. (Standard: aktiviert)"/>
+    <Translation ID="AVO_OPT_GEN_DEBUG" String="Aktiviere erweiterte Log-Meldungen"/>
+	<Translation ID="AVO_OPT_GEN_DEBUG_TT" String="Falls aktiviert, werden zusätzliche Information durch AVO&#xA;in die Log-Datei des Spiels geschrieben. (Standard: deaktiviert)"/>
+    <Translation ID="AVO_OPT_GEN_GUI" String="Schaltfläche des Mods ausblenden"/>
+	<Translation ID="AVO_OPT_GEN_GUI_TT" String="Blendet die AVO-Schaltfläche auf der Spielleiste aus.&#xA;Das AVO-Interface kann jederzeit über den Hotkey aufgerufen werden.&#xA;(Standard: aktiviert, Button wird angezeigt)"/>
+    <Translation ID="AVO_OPT_GEN_SERVICE" String="Überprüfung auf Service-Verfügbarkeit bei Spielstart"/>
+	<Translation ID="AVO_OPT_GEN_SERVICE_TT" String="Falls aktiviert, wird bei Spielstart eine Meldung angezeigt, wenn einem&#xA;städtischen Service kein Fahrzeuge zugeordnet wurde. (Standard: aktiviert)"/>
+	<Translation ID="AVO_OPT_BAL" String="Spieleinstellungen"/>	
+	<Translation ID="AVO_OPT_BAL_UNITS" String="Verwende Meilen pro Stunde (mph) anstelle von Kilometer pro Stunde (km/h)"/>	
+	<Translation ID="AVO_OPT_BAL_UNITS_TT" String="Geschwindigkeit wird in Meilen pro Stunde (mpg) anstelle Kilometer&#xA;pro Stunde (km/h) angezeigt. (Standard: aktiviert, benutze km/h)"/>	
+	<Translation ID="AVO_OPT_BAL_EXT" String="Aktiviere Anzeige zusätzlicher Fahrzeugoptionen"/>	
+	<Translation ID="AVO_OPT_BAL_EXT_TT" String="Falls aktiviert, werden zusätzlich die Feuerlöschrate und Kapazität für Feuerwehr-&#xA;Einheiten, die Kriminialitätsbekämpfungsrate und Kapazität für Polizei-Einheiten,&#xA;die Wartungs- und Pumprate für Wartungs-Einheiten. (Standard: deaktiviert)&#xA;&#xA;Änderungen dieser Werte können die Spielbalance negativ beeinflussen.&#xA;Die Werte sind nicht ausreichend dokumentiert."/>	
+	<Translation ID="AVO_OPT_COMP" String="Kompatibilität"/>	
+	<Translation ID="AVO_OPT_COMP_MODS" String="Zeige Kompatibilitätwarnungen bei Mods"/>	
+	<Translation ID="AVO_OPT_COMP_MODS_TT" String="Falls aktiviert, zeigt AVO alle Werte, die durch Improved Public Transport&#xA;(von BloodyPenguin) und Transport Lines Manager (von Klyte) kontrolliert sind,&#xA;in roter Warnfarbe. Diese Werte sollten nur dort geändert werden.&#xA;&#xA;Falls deaktiviert, wird keine Warnfarbe angezeigt. (Standard: aktiviert)"/>		
+	<Translation ID="AVO_OPT_COMP_VCX" String="Vehicle/Asset Color Expander: Vorrang vor AVO Farboptionen"/>	
+	<Translation ID="AVO_OPT_COMP_VCX_TT" String="Dauerhafte Einstellungen, wenn der Vehicle Color Expander (von Klyte) aktiv ist.&#xA;Das Farb-Management wird durch den Vehicle/Asset Color Expander gesteuert.&#xA;&#xA;Werte müssen im Vehicle/Asset Color Expander definiert werden. (Standard: dauerhaft aktiviert)"/>	
+	<Translation ID="AVO_OPT_COMP_NBT" String="No Big Trucks: Einstellung für Grosse Fahrzeuge"/>	
+	<Translation ID="AVO_OPT_COMP_NBT_TT" String="Falls aktiviert, können Lieferfahrzeuge als Grosses Fahrzeug definiert werden.&#xA;Die Zustellung von Waren wird durch No Big Trucks (von MacSergey) kontrolliert. (Standard: aktiviert)"/>	
+    <Translation ID="AVO_OPT_COMP_TRL" String="Fahrzeuganhänger-Referenzen zuletzt aktualisiert:"/>
+	<Translation ID="AVO_OPT_COMP_TRL_TT" String="Dieses Feld zeigt die letzte Revision der Fahrzeuganhänger-Referenzen für Bus,&#xA;Trolley Bus, Wartungs-, Feuerwehr- and Polizeifahrzeuge an, welche durch&#xA; AVO neu klassifiziert wurden. Die Reklassifizierung ist nötig, da diese&#xA;Anhänger sonst in falschen Kategorien erscheinen."/>
+	<Translation ID="AVO_OPT_SUP" String="Support"/>	
+	<Translation ID="AVO_OPT_SUP_WIKI" String="Öffne die Advanced Vehicle Options Wiki"/>	
+	<Translation ID="AVO_OPT_SUP_LOG" String="Öffne das Cities:Skylines Log-Verzeichnis (output_log.txt)"/>	
+	<Translation ID="AVO_MOD_CAPA" String="Kapazität: "/>		
+	<Translation ID="AVO_MOD_BGUIDESC" String="Modifiziere die Eigenschaften von Fahrzeugen"/>	
+	
+<!-- Text Strings in Main --> 	
+	<Translation ID="AVO_MOD_AV01" String="Die Fahrzeugkonfiguration wurde exportiert.&#xA;&#xA;Die Konfigurationsdatei befindet sich hier: "/>		
+    <Translation ID="AVO_MOD_AV02" String="Die folgenden Stadtservice werden nicht korrekt funktionieren, da für diese keine Fahrzeuge aktiviert wurden:&#xA;&#xA;"/>	
+
+<!-- Text Strings in Vehicle Options --> 	
+	<Translation ID="AVO_MOD_VO01" String="Wasser: "/>		
+    <Translation ID="AVO_MOD_VO02" String="Verbracher: "/>		
+    <Translation ID="AVO_MOD_VO03" String="Pump-Rate: "/>		
+    <Translation ID="AVO_MOD_VO04" String="Fahrdistanz: "/>		
+    <Translation ID="AVO_MOD_VO05" String="Fischfang-Rate: "/>		
+    <Translation ID="AVO_MOD_VO06" String="Unbekannte Kapazität: "/>		
+    <Translation ID="AVO_MOD_VO07" String="Kapazität Passagiere: "/>	
+    <Translation ID="AVO_MOD_VO08" String="Kapazität Fracht: "/>	
+    <Translation ID="AVO_MOD_VO09" String="Kapazität Post: "/>	
+    <Translation ID="AVO_MOD_VO10" String="Kapazität Wartung: "/>	
+    <Translation ID="AVO_MOD_VO11" String="Kapazität Patienten: "/>	
+    <Translation ID="AVO_MOD_VO12" String="Kapazität Leichen: "/>	
+    <Translation ID="AVO_MOD_VO13" String="Bekämpfungsrate: "/>		
+	<Translation ID="AVO_MOD_VO14" String="Feuerlöschrate: "/>		
+	<Translation ID="AVO_MOD_VO15" String="Effizienz-Rate: "/>		
+	
+<!-- Text Strings in  Main Panel --> 	
+	<Translation ID="AVO_MOD_MP00" String="Alle Fahrzeuge"/>			
+	<Translation ID="AVO_MOD_MP01" String="Einwohner - Autos"/>		
+	<Translation ID="AVO_MOD_MP02" String="Einwohner - Fahrräder"/>		
+	<Translation ID="AVO_MOD_MP03" String="Industrie - Forst"/>		
+	<Translation ID="AVO_MOD_MP04" String="Industrie - Land"/>
+	<Translation ID="AVO_MOD_MP05" String="Industrie - Erz"/>
+	<Translation ID="AVO_MOD_MP06" String="Industrie - Öl"/>
+	<Translation ID="AVO_MOD_MP07" String="Industrie - Fisch"/>
+	<Translation ID="AVO_MOD_MP08" String="Industrie - Standard"/>
+	<Translation ID="AVO_MOD_MP09" String="Industrie - Fabriken"/>
+	<Translation ID="AVO_MOD_MP10" String="Polizei"/>
+	<Translation ID="AVO_MOD_MP11" String="Justizvollzug"/>
+	<Translation ID="AVO_MOD_MP12" String="Feuerwehr"/>
+	<Translation ID="AVO_MOD_MP13" String="Katastrophenschutz"/>
+	<Translation ID="AVO_MOD_MP14" String="Gesundheitswesen"/>
+	<Translation ID="AVO_MOD_MP15" String="Bestattungswesen"/>
+	<Translation ID="AVO_MOD_MP16" String="Abfall"/>
+	<Translation ID="AVO_MOD_MP17" String="Abfall-Transfer"/>
+	<Translation ID="AVO_MOD_MP18" String="Wartung"/>
+	<Translation ID="AVO_MOD_MP19" String="Post"/>
+	<Translation ID="AVO_MOD_MP20" String="Bus"/>
+	<Translation ID="AVO_MOD_MP21" String="Intercity Bus"/>
+	<Translation ID="AVO_MOD_MP22" String="Trolley Bus"/>
+	<Translation ID="AVO_MOD_MP23" String="Taxi"/>
+	<Translation ID="AVO_MOD_MP24" String="Metro"/>
+	<Translation ID="AVO_MOD_MP25" String="Tram"/>
+	<Translation ID="AVO_MOD_MP26" String="Monorail"/>
+	<Translation ID="AVO_MOD_MP27" String="Seilbahn"/>
+	<Translation ID="AVO_MOD_MP28" String="Eisenbahn - Fracht"/>
+	<Translation ID="AVO_MOD_MP29" String="Eisenbahn - Passagiere"/>
+	<Translation ID="AVO_MOD_MP30" String="Schiff - Fracht"/>
+	<Translation ID="AVO_MOD_MP31" String="Schiff - Passagiere"/>
+	<Translation ID="AVO_MOD_MP32" String="Schiff - Fähre"/>
+	<Translation ID="AVO_MOD_MP33" String="Flugzeug - Fracht"/>
+	<Translation ID="AVO_MOD_MP34" String="Flugzeug - Passagiere"/>
+	<Translation ID="AVO_MOD_MP35" String="Lokaler Flugverkehr"/>
+	<Translation ID="AVO_MOD_MP36" String="Tourismus + Touren"/>
+	<Translation ID="AVO_MOD_MP37" String="Abschussrampe"/>
+    <Translation ID="AVO_MOD_MP38" String="Natur"/>
+	<Translation ID="AVO_MOD_MP39" String="Wähle eine Kategorie aus&#xA;Tipp: Benutze das Mausrad, um in der Liste zu navigieren."/>	
+	<Translation ID="AVO_MOD_MP40" String="Fahrzeugname eintippen..."/>
+	<Translation ID="AVO_MOD_MP41" String="Aktionen für die Fahrzeugkonfiguration:"/>	
+	<Translation ID="AVO_MOD_MP42" String="Import"/>	
+	<Translation ID="AVO_MOD_MP43" String="Lade eine vorhandene Fahrzeugkonfiguration"/>		
+	<Translation ID="AVO_MOD_MP44" String="Export"/>	
+	<Translation ID="AVO_MOD_MP45" String="Sichere die aktuelle Fahrzeugkonfiguration"/>		
+	<Translation ID="AVO_MOD_MP46" String="Reset"/>	
+	<Translation ID="AVO_MOD_MP47" String="Die Standardeinstellungen für alle Fahrzeuge wieder herstellen"/>		
+	<Translation ID="AVO_MOD_MP48" String="Automatisches Speichern&#xA;der Fahrzeugkonfiguration"/>		
+	<Translation ID="AVO_MOD_MP49" String="Das automatische Speichern der Fahrzeugkonfiguration ist aktiviert."/>		
+	<Translation ID="AVO_MOD_MP50" String="Hier klicken, um durch alle Fahrzeuge dieses Typ zu springen. Es werden nur Fahrzeuge berücksichtigt, die sich in Bereichen befinden, die dem Spieler gehören.&#xA;Shift Key gedrückt halten, um direkt zum Fahrzeug zu zoomen."/>		
+	<Translation ID="AVO_MOD_MP51" String="Hier klicken, um das ausgewählte Fahrzeug von der Spielwelt zu entfernen."/>		
+	<Translation ID="AVO_MOD_MP52" String="Bestätigung erforderlich"/>	
+	<Translation ID="AVO_MOD_MP53" String="Alle geänderten Fahrzeugwerte werden zurückgesetzt.&#xA;&#xA; Soll die Konfiguration zurückgesetzt werden ?"/>	
+	<Translation ID="AVO_MOD_MP54" String="Die Fahrzeugkonfiguration und alle geänderten Werte wurden auf die Standardeinstellungenen der Fahrzeugeinheiten zurückgesetzt."/>	
+	<Translation ID="AVO_MOD_MP55" String="   Suche:"/>	
+	<Translation ID="AVO_MOD_MP56" String="Kategorie:"/>
+
+<!-- Text Strings in Option Panel --> 	
+	<Translation ID="AVO_MOD_OP01" String="km/h"/>	
+	<Translation ID="AVO_MOD_OP02" String="mph"/>		
+	<Translation ID="AVO_MOD_OP03" String="&#xA;&#xA;Achtung: Improved Public Transport ist aktiv&#xA;und kann diese Einstellung überschreiben."/>	
+	<Translation ID="AVO_MOD_OP04" String="&#xA;&#xA;Achtung: Transport Lines Manager ist aktiv&#xA;und kann diese Einstellung überschreiben."/>	
+	<Translation ID="AVO_MOD_OP05" String="Aktion für: "/>	
+	<Translation ID="AVO_MOD_OP06" String="Höchstgeschw.: "/>	
+	<Translation ID="AVO_MOD_OP07" String="Ändert die Höchstgeschwindigkeit.&#xA;Wichtig: Fahrzeuge werden nicht schneller fahren, als die Geschwindigkeitsbegrenzung auf dem Netzwerk, auf dem diese unterwegs sind."/>	
+	<Translation ID="AVO_MOD_OP08" String="Beschl./Bremsen/Abbiegen: "/>	
+	<Translation ID="AVO_MOD_OP09" String="Ändert den Faktor für Beschleunigung;&#xA;Definiert, wie schnell das Fahrzeug beschleunigt."/>	
+	<Translation ID="AVO_MOD_OP10" String="Ändert den Faktor für Abbremsung;&#xA;Definiert, wie schnell das Fahrzeug bremst."/>	
+	<Translation ID="AVO_MOD_OP11" String="Ändert den Faktor für Abbiegen;&#xA;Definiert, wie gut das Fahrzeug um Kurven geht."/>	
+	<Translation ID="AVO_MOD_OP12" String="Federung/Dämpfer"/>	
+	<Translation ID="AVO_MOD_OP13" String="Ändert den Faktor für Federung;&#xA;Definiert, wie gut die Federung anspricht."/>	
+	<Translation ID="AVO_MOD_OP14" String="Ändert den Faktor für Dämpfer;&#xA;Definiert, wie schnell die Fedrerung wieder in Ausgangslage zurückkehrt."/>	
+	<Translation ID="AVO_MOD_OP15" String="Neigung/Wipp-Multiplikator: "/>	
+	<Translation ID="AVO_MOD_OP16" String="Ändert den Faktor für Neigung;&#xA;Definiert, wie stark sich das Fahrzeug zur Seite neight, wenn es in eine Kurve fährt."/>	
+	<Translation ID="AVO_MOD_OP17" String="Ändert den Faktor für Wippen;&#xA;Definiert, wie stark das Fahrzeug vorwärts/rückwärts wippt, wenn es beschleunigt oder bremst."/>	
+	<Translation ID="AVO_MOD_OP18" String="Aktiviere Farbvariationen:"/>	
+	<Translation ID="AVO_MOD_OP19" String="Aktiviere Farbvariationen&#xA;Eine Zufallsfarbe wird aus den folgenden vier Farben ausgewählt."/>	
+	<Translation ID="AVO_MOD_OP20" String="Farben werden durch den Vehicle/Asset Color Expander festgelegt"/>	
+	<Translation ID="AVO_MOD_OP21" String="Fahrzeug erscheint im Spiel"/>	
+	<Translation ID="AVO_MOD_OP22" String="Stelle sicher, dass mindestens ein Fahrzeug in jeder Kategorie im Spiel erscheinen kann."/>	
+	<Translation ID="AVO_MOD_OP23" String="Ersetze den letzten Waggon mit Lokomotive"/>	
+	<Translation ID="AVO_MOD_OP24" String="Der letzte Waggon des Zuges wird mit einer Lokomotive ersetzt."/>		
+	<Translation ID="AVO_MOD_OP25" String="Markiert als Grosses Fahrzeug"/>	
+	<Translation ID="AVO_MOD_OP26" String="Verhindert, dass Fahrzeuge mit Anhänger an kleine Gebäude liefern.&#xA;&#xA;Dieses Verhalten wird durch No Big Trucks kontrolliert."/>	
+	<Translation ID="AVO_MOD_OP27" String="Kapazität des Fahrzeugs ändern"/>	
+	<Translation ID="AVO_MOD_OP28" String="Spezielle Kapazität: "/>	
+	<Translation ID="AVO_MOD_OP29" String="Ändert erweiterte Paramater dieses Fahrzeugs."/>	
+	<Translation ID="AVO_MOD_OP30" String="Wenn Du nicht weisst, was hier passiert:&#xA;Nicht ändern!&#xA;&#xA;Hier klicken für den User Guide: Special Capacity."/>	
+	<Translation ID="AVO_MOD_OP31" String="Konfiguriere im Transport Line Overview"/>	
+	<Translation ID="AVO_MOD_OP32" String="Öffnet den Transport Line Overview, um Fahrzeuge konfigurieren."/>	
+	<Translation ID="AVO_MOD_OP33" String="Hier klicken für den User Guide: Spawn Control"/>	
+	<Translation ID="AVO_MOD_OP34" String="Bus-Anhänger werden durch das Hauptfahrzeug kontrolliert.&#xA;Die Einstellungen müssen im&#xA;Transport Line Overview Fenster konfiguriert werden."/>	
+	<Translation ID="AVO_MOD_OP35" String="Standardwerte"/>	
+	<Translation ID="AVO_MOD_OP36" String="Alle Fahrzeugwerte für dieses Fahrzeug auf Standard zurücksetzen."/>	
+	<Translation ID="AVO_MOD_OP37" String="Globale Aktion für: "/>	
+	<Translation ID="AVO_MOD_OP38" String="Entf. fahrende"/>		
+	<Translation ID="AVO_MOD_OP39" String="Entferne alle fahrenden Fahrzeuge dieses Typs.&#xA;SHIFT Taste gedrückt halten, um alle fahrenden Fahrzeuge unabhängig vom gewählten Typ zu entfernen."/>		
+	<Translation ID="AVO_MOD_OP40" String="Entf. geparkte"/>		
+	<Translation ID="AVO_MOD_OP41" String="Entferne alle geparkten Fahrzeuge dieses Typs.&#xA;SHIFT Taste gedrückt halten, um alle fahrenden Fahrzeuge unabhängig vom gewählten Typ zu entfernen."/>
+	<Translation ID="AVO_MOD_OP42" String=" wird nicht korrekt funktionieren, da keine Fahrzeug aktiviert worden sind."/>	
+
+<!-- Text Strings in GUI Warning Modal --> 	
+	<Translation ID="AVO_MOD_WM01" String="Warnung / Achtung"/>	
+	
+  </Translations>
+</Language>
