@@ -101,8 +101,8 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_disabled.isVisible = !options.enabled;
 			
-            //Verify if the vehicle is a Game Controlled Spawn Public Transport vehicle, where the game controls spawning; if disabled/deactivated set to enabled
-			if (options.isPublicTransportGame == true) // && AdvancedVehicleOptionsUID.SpawnControl == true)  && options.isUncontrolledPublicTransport == false)
+            //Verify if the vehicle is a Game Controlled Spawn Public Transport vehicle, where the game controls spawning
+			if (options.isPublicTransportGame == true) 
 			{
 				if (options.enabled == false)
  				  options.enabled = true;

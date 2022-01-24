@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using ColossalFramework.UI;
 using ColossalFramework.Threading;
 
@@ -10,10 +11,10 @@ namespace AdvancedVehicleOptionsUID.GUI
 {
     public class UIOptionPanel : UIPanel
     {
-        private const float maxSpeedToKmhConversionFactor = 6.25f;
-        private const float mphFactor = 1.609344f;
+        public static float maxSpeedToKmhConversionFactor = 6.25f;
+        public static float mphFactor = 1.609344f;
 
-        private UITextField m_maxSpeed;
+        public static UITextField m_maxSpeed;
         private UITextField m_acceleration;
         private UITextField m_braking;
         private UITextField m_turning;
@@ -31,6 +32,7 @@ namespace AdvancedVehicleOptionsUID.GUI
         private UITextField m_color2_hex;
         private UITextField m_color3_hex;
         private UICheckBox m_enabled;
+        private UILabel m_planesize;
         private UICheckBox m_addBackEngine;
         private UITextField m_capacity;
         private UITextField m_specialcapacity;
@@ -47,11 +49,11 @@ namespace AdvancedVehicleOptionsUID.GUI
         private UILabel bustrailerLabel;
         private UICheckBox m_isLargeVehicle;
         private UILabel m_useColorsLabel;
-        private UILabel kmhLabel;
+        internal UILabel kmhLabel;
 
         public VehicleOptions m_options = null;
 
-        private bool m_initialized = false;
+        internal bool m_initialized = false;
         private int LineOverviewType = -1;
         private Color32 OldColorTextField;
         private Color32 OldColorText;
@@ -92,18 +94,18 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_color2.relativePosition = new Vector3(182, 135);
             m_color3.relativePosition = new Vector3(182, 160);
 
-            if (!AdvancedVehicleOptionsUID.SpeedUnitOption)
+            if (!AdvancedVehicleOptions.SpeedUnitOption)
             {
                 m_maxSpeed.text = Mathf.RoundToInt(options.maxSpeed * maxSpeedToKmhConversionFactor).ToString();
-                kmhLabel.text = "km/h";
+                kmhLabel.text = Translations.Translate("AVO_MOD_OP01");
             }
             else
             {
                 m_maxSpeed.text = Mathf.RoundToInt((options.maxSpeed / mphFactor) * maxSpeedToKmhConversionFactor).ToString();
-                kmhLabel.text = "mph";
+                kmhLabel.text = Translations.Translate("AVO_MOD_OP02");
             }
 
-            m_acceleration.text = options.acceleration.ToString();//m_capacity
+            m_acceleration.text = options.acceleration.ToString();     
             m_braking.text = options.braking.ToString();
             m_turning.text = options.turning.ToString();
             m_springs.text = options.springs.ToString();
@@ -153,17 +155,13 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_maxSpeed.textColor = OldColorText;
             m_maxSpeed.tooltip = OldMaxSpeedTooltip;
 
-            //DebugUtils.Log("GameBalanceOptionsptions " + AdvancedVehicleOptionsUID.GameBalanceOptions);		
-            //DebugUtils.Log("NonPaxCargo - Do Not Show Capacity " + options.isNonPaxCargo);		
-            //DebugUtils.Log("Capacity - Do Not Show Capacity " + options.hasCapacity);	
-
             //Only display Cargo Capacity or Passenger Capacity - not any other values
-            if (options.isNonPaxCargo == true && options.hasCapacity == true && AdvancedVehicleOptionsUID.GameBalanceOptions == true)
+            if (options.isNonPaxCargo == true && options.hasCapacity == true && AdvancedVehicleOptions.ShowMoreVehicleOptions == true)
             {
                 m_capacity.parent.isVisible = true;
             }
             else
-                if (options.isNonPaxCargo == true && options.hasCapacity == true && AdvancedVehicleOptionsUID.GameBalanceOptions == false)
+                if (options.isNonPaxCargo == true && options.hasCapacity == true && AdvancedVehicleOptions.ShowMoreVehicleOptions == false)
             {
                 m_capacity.parent.isVisible = false;
             }
@@ -183,13 +181,8 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_useColorsLabel.Show();
             }
 
-            //DebugUtils.Log("IsIPTActive " + IPTCompatibilityPatch.IsIPTActive());	
-            //DebugUtils.Log("OverrideIPT " + AdvancedVehicleOptionsUID.OverrideIPT);	
-            //DebugUtils.Log("IsPublicTransport " + options.isPublicTransport);	
-
-            // Compatibility Patch for IPT, TLM and Cities Skylines Vehicle Spawning, Vehicle values. For Spawning Vehicles the Line Overview Window will be shown.
-
-            if ((options.isPublicTransportGame == true) && AdvancedVehicleOptionsUID.SpawnControl == true)
+            // Compatibility Patch for IPT, TLM and Cities Skylines Vehicle Spawning, Vehicle values. Instead of Spawn Allowed buttons for the Vehicles the Line Overview Window will be shown.
+            if (options.isPublicTransportGame == true)
             {
                 m_enabled.Hide();
                 m_lineoverview.Show();
@@ -212,7 +205,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_userguidespawn.Hide();
             }
 
-            if (AdvancedVehicleOptionsUID.OverrideCompatibilityWarnings == true && options.isPublicTransport == true && !options.isNotPublicTransportMod == true)
+            if (AdvancedVehicleOptions.OverrideCompatibilityWarnings == true && options.isPublicTransport == true && !options.isNotPublicTransportMod == true)
             {
                 if (IPTCompatibilityPatch.IsIPTActive() == true)
                 {
@@ -222,29 +215,55 @@ namespace AdvancedVehicleOptionsUID.GUI
                     m_maxSpeed.textColor = new Color32(255, 230, 130, 255);
                     m_capacity.textColor = new Color32(255, 230, 130, 255);
                     m_specialcapacity.textColor = new Color32(255, 230, 130, 255);
-                    m_maxSpeed.tooltip = m_maxSpeed.tooltip + "\n\nWarning: Improved Public Transport is active\nand may override this setting.";
-                    m_capacity.tooltip = m_capacity.tooltip + "\n\nWarning: Improved Public Transport is active\nand may override this setting.";
-                    m_specialcapacity.tooltip = m_specialcapacity.tooltip + "\n\nWarning: Improved Public Transport is active\nand may override this setting.";
+                    m_maxSpeed.tooltip = m_maxSpeed.tooltip + Translations.Translate("AVO_MOD_OP03");
+                    m_capacity.tooltip = m_capacity.tooltip + Translations.Translate("AVO_MOD_OP03");
+                    m_specialcapacity.tooltip = m_specialcapacity.tooltip + Translations.Translate("AVO_MOD_OP03");
                 }
                 if (TLMCompatibilityPatch.IsTLMActive() == true)
                 {
                     m_capacity.color = new Color32(240, 130, 130, 255);
                     m_capacity.textColor = new Color32(255, 230, 130, 255);
-                    m_capacity.tooltip = m_capacity.tooltip + "\n\nWarning: Transport Lines Manager is active\nand may override this setting.";
+                    m_capacity.tooltip = m_capacity.tooltip + Translations.Translate("AVO_MOD_OP04");
                 }
             }
 
-            if (NoBigTruckCompatibilityPatch.IsNBTActive() == true && AdvancedVehicleOptionsUID.ControlTruckDelivery == true && options.isDelivery == true && options.hasTrailer == true)
+            if (NoBigTruckCompatibilityPatch.IsNBTActive() == true && AdvancedVehicleOptions.ControlTruckDelivery == true && options.isDelivery == true && options.hasTrailer == true)
             {
                 m_isLargeVehicle.Show();
-                //DebugUtils.Log("AVO IsLargeVehicle");	
+
+                Logging.Message("Vehicle " + options.localizedName + " is flagged as Large Vehicle.");
             }
 
             // Compatibility Patch section ends
 
+
+            // Flight Stand Info introduced in Airports DLC
+
+            if ((options.prefab.m_vehicleType == VehicleInfo.VehicleType.Plane && options.prefab.m_class.m_level != ItemClass.Level.Level5))
+            {
+                if (options.prefab.m_class.m_level == ItemClass.Level.Level1)
+                {
+                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP45");
+                }
+                if (options.prefab.m_class.m_level == ItemClass.Level.Level2)
+                {
+                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP46");
+                }
+                if (options.prefab.m_class.m_level == ItemClass.Level.Level3)
+                {
+                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP44"); ;
+                }
+                if (options.prefab.m_class.m_level == ItemClass.Level.Level4)
+                {
+                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP47"); ;
+                }
+                m_planesize.isVisible = true;
+            }
+            else m_planesize.isVisible = false;
+
             string name = options.localizedName;
             if (name.Length > 40) name = name.Substring(0, 38) + "...";
-            m_removeLabel.text = "Actions for: " + name;
+            m_removeLabel.text = Translations.Translate("AVO_MOD_OP05") + name;
 
             (parent as UIMainPanel).ChangePreviewColor(m_color0.selectedColor);
 
@@ -266,14 +285,14 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             // Max Speed
             UILabel maxSpeedLabel = panel.AddUIComponent<UILabel>();
-            maxSpeedLabel.text = "Maximum speed:";
+            maxSpeedLabel.text = Translations.Translate("AVO_MOD_OP06");
             maxSpeedLabel.textScale = 0.8f;
             maxSpeedLabel.relativePosition = new Vector3(15, 14);
 
             m_maxSpeed = UIUtils.CreateTextField(panel);
             m_maxSpeed.numericalOnly = true;
             m_maxSpeed.width = 75;
-            m_maxSpeed.tooltip = "Change the maximum speed of the vehicle\nPlease note that vehicles do not go beyond speed limits";
+            m_maxSpeed.tooltip = Translations.Translate("AVO_MOD_OP07");
             m_maxSpeed.relativePosition = new Vector3(15, 33);
 
             kmhLabel = panel.AddUIComponent<UILabel>();
@@ -283,7 +302,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             // Acceleration
             UILabel accelerationLabel = panel.AddUIComponent<UILabel>();
-            accelerationLabel.text = "Acceleration/Brake/Turning:";
+            accelerationLabel.text = Translations.Translate("AVO_MOD_OP08");
             accelerationLabel.textScale = 0.8f;
             accelerationLabel.relativePosition = new Vector3(160, 13);
 
@@ -291,7 +310,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_acceleration.numericalOnly = true;
             m_acceleration.allowFloats = true;
             m_acceleration.width = 60;
-            m_acceleration.tooltip = "Change the vehicle acceleration factor";
+            m_acceleration.tooltip = Translations.Translate("AVO_MOD_OP09");
             m_acceleration.relativePosition = new Vector3(160, 33);
 
             // Braking
@@ -299,7 +318,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_braking.numericalOnly = true;
             m_braking.allowFloats = true;
             m_braking.width = 60;
-            m_braking.tooltip = "Change the vehicle braking factor";
+            m_braking.tooltip = Translations.Translate("AVO_MOD_OP10");
             m_braking.relativePosition = new Vector3(230, 33);
 
             // Turning
@@ -307,12 +326,12 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_turning.numericalOnly = true;
             m_turning.allowFloats = true;
             m_turning.width = 60;
-            m_turning.tooltip = "Change the vehicle turning factor;\nDefines how well the car corners";
+            m_turning.tooltip = Translations.Translate("AVO_MOD_OP11");
             m_turning.relativePosition = new Vector3(300, 33);
 
             // Springs
             UILabel springsLabel = panel.AddUIComponent<UILabel>();
-            springsLabel.text = "Springs/Dampers:";
+            springsLabel.text = Translations.Translate("AVO_MOD_OP12");
             springsLabel.textScale = 0.8f;
             springsLabel.relativePosition = new Vector3(15, 66);
 
@@ -320,7 +339,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_springs.numericalOnly = true;
             m_springs.allowFloats = true;
             m_springs.width = 60;
-            m_springs.tooltip = "Change the vehicle spring factor;\nDefines how much the suspension moves";
+            m_springs.tooltip = Translations.Translate("AVO_MOD_OP13");
             m_springs.relativePosition = new Vector3(15, 85);
 
             // Dampers
@@ -328,12 +347,12 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_dampers.numericalOnly = true;
             m_dampers.allowFloats = true;
             m_dampers.width = 60;
-            m_dampers.tooltip = "Change the vehicle damper factor;\nDefines how quickly the suspension returns to the default state";
+            m_dampers.tooltip = Translations.Translate("AVO_MOD_OP14");
             m_dampers.relativePosition = new Vector3(85, 85);
 
             // LeanMultiplier
             UILabel leanMultiplierLabel = panel.AddUIComponent<UILabel>();
-            leanMultiplierLabel.text = "Lean/Nod Multiplier:";
+            leanMultiplierLabel.text = Translations.Translate("AVO_MOD_OP15");
             leanMultiplierLabel.textScale = 0.8f;
             leanMultiplierLabel.relativePosition = new Vector3(160, 66);
 
@@ -341,7 +360,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_leanMultiplier.numericalOnly = true;
             m_leanMultiplier.allowFloats = true;
             m_leanMultiplier.width = 60;
-            m_leanMultiplier.tooltip = "Change the vehicle lean multiplication factor;\nDefines how much the vehicle leans to the sides when turning";
+            m_leanMultiplier.tooltip = Translations.Translate("AVO_MOD_OP16");
             m_leanMultiplier.relativePosition = new Vector3(160, 85);
 
             // NodMultiplier
@@ -349,15 +368,15 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_nodMultiplier.numericalOnly = true;
             m_nodMultiplier.allowFloats = true;
             m_nodMultiplier.width = 60;
-            m_nodMultiplier.tooltip = "Change the vehicle nod multiplication factor;\nDefines how much the vehicle nods forward/backward when braking or accelerating";
+            m_nodMultiplier.tooltip = Translations.Translate("AVO_MOD_OP17");
             m_nodMultiplier.relativePosition = new Vector3(230, 85);
 
             // Colors
             m_useColors = UIUtils.CreateCheckBox(panel);
-            m_useColors.text = "Enable Color variations:";
+            m_useColors.text = Translations.Translate("AVO_MOD_OP18");
             m_useColors.isChecked = true;
             m_useColors.width = width - 40;
-            m_useColors.tooltip = "Enable color variations\nA random color is chosen between the four following colors";
+            m_useColors.tooltip = Translations.Translate("AVO_MOD_OP19");
             m_useColors.relativePosition = new Vector3(15, 116);
 
             m_color0 = UIUtils.CreateColorField(panel);
@@ -395,29 +414,29 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_useColorsLabel = panel.AddUIComponent<UILabel>();
             m_useColorsLabel.Hide();
             m_useColorsLabel.textScale = 0.8f;
-            m_useColorsLabel.text = "Colors are managed by Vehicle Color Expander";
+            m_useColorsLabel.text = Translations.Translate("AVO_MOD_OP20");
             m_useColorsLabel.relativePosition = new Vector3(15, 116);
 
             // Enable & BackEngine
             m_enabled = UIUtils.CreateCheckBox(panel);
-            m_enabled.text = "Allow this vehicle to spawn";
+            m_enabled.text = Translations.Translate("AVO_MOD_OP21");
             m_enabled.isChecked = true;
             m_enabled.width = width - 40;
-            m_enabled.tooltip = "Make sure you have at least one vehicle allowed to spawn for that category";
-            m_enabled.relativePosition = new Vector3(15, 195); ;
+            m_enabled.tooltip = Translations.Translate("AVO_MOD_OP22");
+            m_enabled.relativePosition = new Vector3(15, 195);
 
             m_addBackEngine = UIUtils.CreateCheckBox(panel);
-            m_addBackEngine.text = "Replace last car with engine";
+            m_addBackEngine.text = Translations.Translate("AVO_MOD_OP23");
             m_addBackEngine.isChecked = false;
             m_addBackEngine.width = width - 40;
-            m_addBackEngine.tooltip = "Make the last car of this train be an engine";
+            m_addBackEngine.tooltip = Translations.Translate("AVO_MOD_OP24");
             m_addBackEngine.relativePosition = new Vector3(15, 215);
 
             // LargeVehicle Setting for NoBigTruck Delivery Mod
             m_isLargeVehicle = UIUtils.CreateCheckBox(panel);
-            m_isLargeVehicle.text = "Flag as Large Vehicle";
+            m_isLargeVehicle.text = Translations.Translate("AVO_MOD_OP25");
             m_isLargeVehicle.width = width - 40;
-            m_isLargeVehicle.tooltip = "Prevent vehicles with trailer to deliver to small buildings\n\nNeeds No Big Trucks mod to work";
+            m_isLargeVehicle.tooltip = Translations.Translate("AVO_MOD_OP26");
             m_isLargeVehicle.relativePosition = new Vector3(15, 215);
 
             // Capacity
@@ -426,7 +445,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             capacityPanel.relativePosition = new Vector3(15, 240);
 
             capacityLabel = capacityPanel.AddUIComponent<UILabel>();
-            capacityLabel.text = "Capacity: ";
+            capacityLabel.text = Translations.Translate("AVO_MOD_CAPA");
             capacityLabel.textScale = 0.8f;
             capacityLabel.relativePosition = new Vector3(0, 2);
 
@@ -434,13 +453,17 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_capacity.numericalOnly = true;
             m_capacity.maxLength = 8;
             m_capacity.width = 100;
-            m_capacity.tooltip = "Change the capacity of the vehicle";
+            m_capacity.tooltip = Translations.Translate("AVO_MOD_OP27");
             m_capacity.relativePosition = new Vector3(0, 21);
+
+            m_planesize = capacityPanel.AddUIComponent<UILabel>();
+            m_planesize.textScale = 0.8f;
+            m_planesize.relativePosition = new Vector3(170, 2);
 
             // Special Capacity			
             specialcapacityLabel = capacityPanel.AddUIComponent<UILabel>();
             specialcapacityLabel.Hide();
-            specialcapacityLabel.text = "Special Capacity: ";
+            specialcapacityLabel.text = Translations.Translate("AVO_MOD_OP28");
             specialcapacityLabel.textScale = 0.8f;
             specialcapacityLabel.relativePosition = new Vector3(160, 2);
 
@@ -449,7 +472,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_specialcapacity.numericalOnly = true;
             m_specialcapacity.maxLength = 8;
             m_specialcapacity.width = 100;
-            m_specialcapacity.tooltip = "Change special parameters of the vehicle";
+            m_specialcapacity.tooltip = Translations.Translate("AVO_MOD_OP29");
             m_specialcapacity.relativePosition = new Vector3(160, 21);
 
             // Userguide Special Capacity Button
@@ -458,7 +481,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_userguidespecialcapacity.normalBgSprite = "EconomyMoreInfo";
             m_userguidespecialcapacity.hoveredBgSprite = "EconomyMoreInfoHovered";
             m_userguidespecialcapacity.size = new Vector2(14f, 14f);
-            m_userguidespecialcapacity.tooltip = "If you do not know, what this value is:\nDo not touch it!\n\nClick for User Guide: Special Capacity";
+            m_userguidespecialcapacity.tooltip = Translations.Translate("AVO_MOD_OP30");
             m_userguidespecialcapacity.relativePosition = new Vector3(265, 24);
 
             // Transport Line Overview Button	
@@ -467,9 +490,9 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_lineoverview.textScale = 0.8f;
             m_lineoverview.height = 18;
             m_lineoverview.textVerticalAlignment = UIVerticalAlignment.Bottom;
-            m_lineoverview.text = "Manage Spawning in Transport Line Overview";
+            m_lineoverview.text = Translations.Translate("AVO_MOD_OP31");
             m_lineoverview.width = 335;
-            m_lineoverview.tooltip = "Open the Transport Line Overview and manage the vehicle spawning";
+            m_lineoverview.tooltip = Translations.Translate("AVO_MOD_OP32");
             m_lineoverview.relativePosition = new Vector3(15, 194);
 
             // Userguide Spawn Button
@@ -478,40 +501,38 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_userguidespawn.normalBgSprite = "EconomyMoreInfo";
             m_userguidespawn.hoveredBgSprite = "EconomyMoreInfoHovered";
             m_userguidespawn.size = new Vector2(14f, 14f);
-            m_userguidespawn.tooltip = "Click for User Guide: Spawn Control";
+            m_userguidespawn.tooltip = Translations.Translate("AVO_MOD_OP33");
             m_userguidespawn.relativePosition = new Vector3(355, 195);
 
             // Buslabel		
             bustrailerLabel = panel.AddUIComponent<UILabel>();
             bustrailerLabel.textScale = 0.8f;
-            bustrailerLabel.text = "Bus trailers spawning is controlled by the main\n" +
-                                   "Bus vehicle. Settings must be configured from\n" +
-                                   "the Transport Line Overview panel.";
+            bustrailerLabel.text = Translations.Translate("AVO_MOD_OP34");
             bustrailerLabel.relativePosition = new Vector3(15, 194);
 
             // Restore default
             m_restore = UIUtils.CreateButton(panel);
-            m_restore.text = "Default Values";
+            m_restore.text = Translations.Translate("AVO_MOD_OP35");
             m_restore.width = 120;
-            m_restore.tooltip = "Restore all values to default";
+            m_restore.tooltip = Translations.Translate("AVO_MOD_OP36");
             m_restore.relativePosition = new Vector3(250, height - 45);
 
             // Remove Vehicles
             m_removeLabel = this.AddUIComponent<UILabel>();
-            m_removeLabel.text = "Global Actions for: ";
+            m_removeLabel.text = Translations.Translate("AVO_MOD_OP37");
             m_removeLabel.textScale = 0.8f;
             m_removeLabel.relativePosition = new Vector3(10, height - 65);
 
             m_clearVehicles = UIUtils.CreateButton(this);
-            m_clearVehicles.text = "Remove Driving";
+            m_clearVehicles.text = Translations.Translate("AVO_MOD_OP38");
             m_clearVehicles.width = 120;
-            m_clearVehicles.tooltip = "Remove all driving vehicles of that type\nHold the SHIFT key to remove all types";
+            m_clearVehicles.tooltip = Translations.Translate("AVO_MOD_OP39");
             m_clearVehicles.relativePosition = new Vector3(5, height - 45);
 
             m_clearParked = UIUtils.CreateButton(this);
-            m_clearParked.text = "Remove Parked";
+            m_clearParked.text = Translations.Translate("AVO_MOD_OP40");
             m_clearParked.width = 120;
-            m_clearParked.tooltip = "Remove all parked vehicles of that type\nHold the SHIFT key to remove all types";
+            m_clearParked.tooltip = Translations.Translate("AVO_MOD_OP41");
             m_clearParked.relativePosition = new Vector3(130, height - 45);
 
             panel.BringToFront();
@@ -610,9 +631,9 @@ namespace AdvancedVehicleOptionsUID.GUI
                     }
                 }
 
-                if (!state && !AdvancedVehicleOptionsUID.CheckServiceValidity(m_options.category))
+                if (!state && !AdvancedVehicleOptions.CheckServiceValidity(m_options.category))
                 {
-                    GUI.UIWarningModal.instance.message = UIMainPanel.categoryList[(int)m_options.category + 1] + " may not work correctly because no vehicles are allowed to spawn.";
+                    GUI.UIWarningModal.instance.message = UIMainPanel.categoryList[(int)m_options.category + 1] + Translations.Translate("AVO_MOD_OP42");
                     UIView.PushModal(GUI.UIWarningModal.instance);
                     GUI.UIWarningModal.instance.Show(true);
                 }
@@ -635,7 +656,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             {
                 m_options.isLargeVehicle = state;
             }
-
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -644,13 +665,14 @@ namespace AdvancedVehicleOptionsUID.GUI
             if (!m_initialized || m_options == null) return;
             m_initialized = false;
 
-            if (!AdvancedVehicleOptionsUID.SpeedUnitOption)
+            if (!AdvancedVehicleOptions.SpeedUnitOption)
             {
                 m_options.maxSpeed = float.Parse(text) / maxSpeedToKmhConversionFactor;
             }
             else
                 m_options.maxSpeed = (float.Parse(text) * mphFactor) / maxSpeedToKmhConversionFactor;
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -661,6 +683,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.acceleration = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -671,6 +694,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.braking = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
         
@@ -681,6 +705,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.turning = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -691,6 +716,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.springs = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -701,6 +727,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.dampers = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -711,6 +738,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.leanMultiplier = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -721,6 +749,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_options.nodMultiplier = float.Parse(text);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -733,6 +762,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             VehicleOptions.prefabUpdateUnits = m_options.prefab;
             SimulationManager.instance.AddAction(VehicleOptions.UpdateCapacityUnits);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -745,6 +775,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             VehicleOptions.prefabUpdateUnits = m_options.prefab;
             SimulationManager.instance.AddAction(VehicleOptions.UpdateCapacityUnits);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -765,6 +796,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_color2_hex.text = m_options.color2.ToString();
             m_color3_hex.text = m_options.color3.ToString();
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -802,6 +834,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             (parent as UIMainPanel).ChangePreviewColor(color);
 
+            AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
 
@@ -810,9 +843,9 @@ namespace AdvancedVehicleOptionsUID.GUI
             if (m_options == null) return;
 
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                AdvancedVehicleOptionsUID.ClearVehicles(null, component == m_clearParked);
+                AdvancedVehicleOptions.ClearVehicles(null, component == m_clearParked);
             else
-                AdvancedVehicleOptionsUID.ClearVehicles(m_options, component == m_clearParked);
+                AdvancedVehicleOptions.ClearVehicles(m_options, component == m_clearParked);
         }
 
         protected void OnlineoverviewClicked(UIComponent component, UIMouseEventParameter p)

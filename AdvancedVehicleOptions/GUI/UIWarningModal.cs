@@ -70,7 +70,7 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             // Title Bar
             m_title = AddUIComponent<UITitleBar>();
-            m_title.title = "Advanced Vehicle Options - Warning";
+            m_title.title = "Advanced Vehicle Options - " + Translations.Translate("AVO_MOD_WM01");
             m_title.iconSprite = "IconCitizenVehicle";
             m_title.isModal = true;
 

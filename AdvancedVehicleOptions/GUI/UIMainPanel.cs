@@ -11,39 +11,42 @@ namespace AdvancedVehicleOptionsUID.GUI
 {
     public class UIMainPanel : UIPanel
     {
-        private UITitleBar m_title;
-        private UIDropDown m_category;
-        private UITextField m_search;
-        private UIFastList m_fastList;
-        private UIButton m_import;
-        private UIButton m_export;
-        private UIButton m_resetall;
-        private UITextureSprite m_preview;
-        private UISprite m_followVehicle;
-		private UISprite m_removeVehicle;
-        private UIOptionPanel m_optionPanel;
+        internal UITitleBar m_title;
+        internal UIDropDown m_category;
+        internal UITextField m_search;
+        internal UIFastList m_fastList;
+        internal UIButton m_import;
+        internal UIButton m_export;
+        internal UILabel m_autosave;
+        internal UIButton m_resetall;
+        internal UITextureSprite m_preview;
+        internal UISprite m_followVehicle;
+        internal UISprite m_removeVehicle;
+        internal UIOptionPanel m_optionPanel;
 
-        public UIButton m_button;
+        internal UIButton m_button;
         public ushort FollowVehicleInstanceID;
 
-        private VehicleOptions[] m_optionsList;
-        private PreviewRenderer m_previewRenderer;
-        private Color m_previewColor;
-        private CameraController m_cameraController;
-        private uint m_seekStart = 0;
+        internal VehicleOptions[] m_optionsList;
+        internal PreviewRenderer m_previewRenderer;
+        internal Color m_previewColor;
+        internal CameraController m_cameraController;
+        internal uint m_seekStart = 0;
 
         private const int HEIGHT = 710;
         private const int WIDTHLEFT = 470;
         private const int WIDTHRIGHT = 390;
 
-        public static readonly string[] categoryList = { "All Vehicles", "Citizen - Cars", "Citizen - Bicycle",
-            "Industry - Forestry", "Industry - Farming", "Industry - Ore", "Industry - Oil", "Industry - Fishing", "Industry - Delivery", "Industry - Factories",
-            "Police", "Prison", "Fire Safety", "Disaster Response",
-            "Healthcare", "Deathcare", "Garbage", "Waste Transfer", "Maintenance", "Postal Service",
-            "Bus", "Intercity Bus", "Trolley Bus", "Taxi", "Metro", "Tram", "Monorail", "Cable Car", 
-            "Train - Cargo", "Train - Passenger",
-            "Ship - Cargo", "Ship - Cruise","Ship - Ferry", "Plane - Cargo", "Plane - Passenger", "Local Air Traffic", "Tourism & Tours",
-            "Launch Site", "Natural" };
+        public static readonly string[] categoryList = { Translations.Translate("AVO_MOD_MP00"), Translations.Translate("AVO_MOD_MP01"), Translations.Translate("AVO_MOD_MP02"), Translations.Translate("AVO_MOD_MP03"), 
+                                                         Translations.Translate("AVO_MOD_MP04"), Translations.Translate("AVO_MOD_MP05"), Translations.Translate("AVO_MOD_MP06"), Translations.Translate("AVO_MOD_MP07"),
+                                                         Translations.Translate("AVO_MOD_MP08"), Translations.Translate("AVO_MOD_MP09"), Translations.Translate("AVO_MOD_MP10"), Translations.Translate("AVO_MOD_MP11"), 
+                                                         Translations.Translate("AVO_MOD_MP12"), Translations.Translate("AVO_MOD_MP13"), Translations.Translate("AVO_MOD_MP14"), Translations.Translate("AVO_MOD_MP15"), 
+                                                         Translations.Translate("AVO_MOD_MP16"), Translations.Translate("AVO_MOD_MP17"), Translations.Translate("AVO_MOD_MP18"), Translations.Translate("AVO_MOD_MP19"),
+                                                         Translations.Translate("AVO_MOD_MP20"), Translations.Translate("AVO_MOD_MP21"), Translations.Translate("AVO_MOD_MP22"), Translations.Translate("AVO_MOD_MP23"),
+                                                         Translations.Translate("AVO_MOD_MP24"), Translations.Translate("AVO_MOD_MP25"), Translations.Translate("AVO_MOD_MP26"), Translations.Translate("AVO_MOD_MP27"),
+                                                         Translations.Translate("AVO_MOD_MP28"), Translations.Translate("AVO_MOD_MP29"), Translations.Translate("AVO_MOD_MP30"), Translations.Translate("AVO_MOD_MP31"),
+                                                         Translations.Translate("AVO_MOD_MP32"), Translations.Translate("AVO_MOD_MP33"), Translations.Translate("AVO_MOD_MP34"), Translations.Translate("AVO_MOD_MP35"), 
+                                                         Translations.Translate("AVO_MOD_MP36"), Translations.Translate("AVO_MOD_MP37"), Translations.Translate("AVO_MOD_MP38") };
 
         public static readonly string[] vehicleIconList = { "IconCitizenVehicle", "IconCitizenBicycleVehicle",
               "IconPolicyForest", "IconPolicyFarming", "IconPolicyOre", "IconPolicyOil", "SubBarIndustryFishing", "IconPolicyNone", "SubBarIndustryUniqueFactory",
@@ -77,7 +80,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             {
                 UIView view = GetUIView();
 
-                name = "AdvancedVehicleOptionsUID";
+                name = "AdvancedVehicleOptions";
                 backgroundSprite = "UnlockingPanel2";
                 isVisible = false;
                 canFocus = true;
@@ -105,10 +108,11 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_button.hoveredFgSprite = "ToolbarIconGroup6Hovered";
 
                 m_button.size = new Vector2(43f, 47f);
-			    m_button.name = "Advanced Vehicle Options";
-                m_button.tooltip = "Vehicle Options";
+			    m_button.name = AVOMod.ModName;
+                m_button.tooltip = "Modify various Vehicle properties";
                 m_button.relativePosition = new Vector3(0, 5);
 			   
+                // GUI Button is pressed in game
                 m_button.eventButtonStateChanged += (c, s) =>
                 {
                     if (s == UIButton.ButtonState.Focused)
@@ -119,12 +123,13 @@ namespace AdvancedVehicleOptionsUID.GUI
                             m_fastList.DisplayAt(m_fastList.listPosition);
                             m_optionPanel.Show(m_fastList.rowsData[m_fastList.selectedIndex] as VehicleOptions);
                             m_followVehicle.isVisible = m_preview.parent.isVisible = true;
+                            AdvancedVehicleOptions.UpdateOptionPanelInfo();
                         }
                     }
                     else
                     {
                         isVisible = false;
-                        m_button.Unfocus();
+                        m_button.Unfocus();                   
                     }
                 };
 
@@ -160,13 +165,13 @@ namespace AdvancedVehicleOptionsUID.GUI
 
                 view.FindUIComponent<UITabContainer>("TSContainer").AddUIComponent<UIPanel>().color = new Color32(0, 0, 0, 0);
 
-                optionList = AdvancedVehicleOptionsUID.config.options;
-                DebugUtils.Log("UI initialized.");
+                optionList = AdvancedVehicleOptions.config.options;
+                Logging.Message("UI initialized.");
             }
             catch (Exception e)
             {
-                DebugUtils.Log("UI initialization failed.");
-                DebugUtils.LogException(e);
+                Logging.Error("UI initialization failed.");
+                Logging.LogException(e);
 
                 if (m_button != null) Destroy(m_button.gameObject);
 
@@ -179,31 +184,27 @@ namespace AdvancedVehicleOptionsUID.GUI
         {
             base.OnDestroy();
 
-            DebugUtils.Log("Destroying UIMainPanel");
+            Logging.Message("Destroying UIMainPanel");
 
             if (m_button != null) GameObject.Destroy(m_button.gameObject);
             GameObject.Destroy(m_optionPanel.gameObject);
         }
 
-        private void SetupControls()
+        internal void SetupControls()
         {
             float offset = 40f;
-
-            //Beta Testing Timestamp 
-            //DateTime now = DateTime.Now;
-            //m_title.title = "Advanced Vehicle Options " + ModInfo.version + " " + now;
 
             // Title Bar
             m_title = AddUIComponent<UITitleBar>();
             m_title.iconSprite = "InfoIconTrafficCongestion";
-            m_title.title = "Advanced Vehicle Options " + ModInfo.version;
+            m_title.title = AVOMod.ModName + " " + AVOMod.Version;
 
             // Category DropDown
             UILabel label = AddUIComponent<UILabel>();
             label.textScale = 0.8f;
             label.padding = new RectOffset(0, 0, 8, 0);
             label.relativePosition = new Vector3(10f, offset);
-            label.text = "Category :";
+            label.text = Translations.Translate("AVO_MOD_MP56");
 
             m_category = UIUtils.CreateDropDown(this);
             m_category.width = 175;
@@ -212,7 +213,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_category.AddItem(categoryList[i]);
 
             m_category.selectedIndex = 0;
-            m_category.tooltip = "Select a category to display\nTip: Use the mouse wheel to switch between categories faster";
+            m_category.tooltip = Translations.Translate("AVO_MOD_MP39");
             m_category.relativePosition = label.relativePosition + new Vector3(75f, 0f);
 
             m_category.eventSelectedIndexChanged += (c, t) =>
@@ -227,7 +228,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_search.width = 145f;
             m_search.height = 30f;
             m_search.padding = new RectOffset(6, 6, 6, 6);
-            m_search.tooltip = "Type the name of a vehicle type";
+            m_search.tooltip = Translations.Translate("AVO_MOD_MP40");
             m_search.relativePosition = new Vector3(WIDTHLEFT - m_search.width, offset);
 
             m_search.eventTextChanged += (c, t) => PopulateList();
@@ -236,7 +237,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             label.textScale = 0.8f;
             label.padding = new RectOffset(0, 0, 8, 0);
             label.relativePosition = m_search.relativePosition - new Vector3(60f, 0f);
-            label.text = "Search :";
+            label.text = Translations.Translate("AVO_MOD_MP55");
 
             // FastList
             m_fastList = UIFastList.Create<UIVehicleItem>(this);
@@ -248,27 +249,37 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             // Configuration file buttons
             UILabel configLabel = this.AddUIComponent<UILabel>();
-            configLabel.text = "Actions for Vehicle Configuration:";
+            configLabel.text = Translations.Translate("AVO_MOD_MP41");
             configLabel.textScale = 0.8f;
             configLabel.relativePosition = new Vector3(16, height - 65);
 
             m_import = UIUtils.CreateButton(this);
-            m_import.text = "Import";
+            m_import.text = Translations.Translate("AVO_MOD_MP42");
             m_import.width = 80;
-            m_import.tooltip = "Import the configuration";
+            m_import.tooltip = Translations.Translate("AVO_MOD_MP43");
             m_import.relativePosition = new Vector3(10, height - 45);
 
             m_export = UIUtils.CreateButton(this);
-            m_export.text = "Export";
+            m_export.text = Translations.Translate("AVO_MOD_MP44");
             m_export.width = 80;
-            m_export.tooltip = "Export the configuration";
+            m_export.tooltip = Translations.Translate("AVO_MOD_MP45");
             m_export.relativePosition = new Vector3(95, height - 45);
 
             m_resetall = UIUtils.CreateButton(this);
-            m_resetall.text = "Reset all";
+            m_resetall.text = Translations.Translate("AVO_MOD_MP46");
             m_resetall.width = 80;
-            m_resetall.tooltip = "Reset full configuration";
+            m_resetall.tooltip = Translations.Translate("AVO_MOD_MP47");
             m_resetall.relativePosition = new Vector3(180, height - 45);
+
+            m_autosave = AddUIComponent<UILabel>();
+            m_autosave.textScale = 0.6f;
+            m_autosave.text = Translations.Translate("AVO_MOD_MP48");
+            m_autosave.relativePosition = new Vector3(275, height - 40);
+            m_autosave.autoSize = true;
+            m_autosave.textAlignment = UIHorizontalAlignment.Center;
+            m_autosave.textColor = Color.green;
+            m_autosave.tooltip = Translations.Translate("AVO_MOD_MP49");
+            m_autosave.isVisible = AdvancedVehicleOptions.AutoSaveVehicleConfig;
 
             // Preview
             UIPanel panel = AddUIComponent<UIPanel>();
@@ -293,7 +304,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_followVehicle.spriteName = "LocationMarkerFocused";
                 m_followVehicle.width = m_followVehicle.spriteInfo.width;
                 m_followVehicle.height = m_followVehicle.spriteInfo.height;
-                m_followVehicle.tooltip = "Click here to cycle through the existing vehicles of that type.\nHold Shift Key down for zooming directly to vehicle.";
+                m_followVehicle.tooltip = Translations.Translate("AVO_MOD_MP50");
                 m_followVehicle.relativePosition = new Vector3(panel.relativePosition.x + panel.width - m_followVehicle.width - 5, panel.relativePosition.y + 5);
 
                 m_followVehicle.eventClick += (c, p) => FollowNextVehicle();
@@ -306,7 +317,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_removeVehicle.spriteName = "IconPolicyOldTown";
                 m_removeVehicle.width = m_removeVehicle.spriteInfo.width -12;
                 m_removeVehicle.height = m_removeVehicle.spriteInfo.height -12;
-                m_removeVehicle.tooltip = "Click here to remove the selected vehicle.";
+                m_removeVehicle.tooltip = Translations.Translate("AVO_MOD_MP51");
                 m_removeVehicle.relativePosition = new Vector3(panel.relativePosition.x + panel.width - m_removeVehicle.width - 33, panel.relativePosition.y + 7);
 
                 m_removeVehicle.eventClick += (c, p) => RemoveThisVehicle();
@@ -317,31 +328,31 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_optionPanel.relativePosition = new Vector3(WIDTHLEFT, height - 370);
 
             // Event handlers
-            m_fastList.eventSelectedIndexChanged += OnSelectedItemChanged; 
+            m_fastList.eventSelectedIndexChanged += OnSelectedItemChanged;
             m_optionPanel.eventEnableCheckChanged += OnEnableStateChanged;
+
             m_import.eventClick += (c, t) =>
             {
                 DefaultOptions.RestoreAll();
-                AdvancedVehicleOptionsUID.ImportConfig();
-                optionList = AdvancedVehicleOptionsUID.config.options;
+                AdvancedVehicleOptions.ImportVehicleDataConfig();
+                optionList = AdvancedVehicleOptions.config.options;
             };
-            m_export.eventClick += (c, t) => AdvancedVehicleOptionsUID.ExportConfig();
+
+            m_export.eventClick += (c, t) => AdvancedVehicleOptions.ExportVehicleDataConfig(true);
 
             m_resetall.eventClick += (c, t) =>
             {
-                   ConfirmPanel.ShowModal("Confirm Reset Configuration", "Customized settings for all vehicles will be reset.\n\n" +
-                                                                         "Proceed with Configuration reset ?",(comp, ret) =>
+                   ConfirmPanel.ShowModal(Translations.Translate("AVO_MOD_MP52"), Translations.Translate("AVO_MOD_MP53"), (comp, ret) =>
                    {
                     if (ret != 1)
                         return;
 
                     DefaultOptions.RestoreAll();
-                    AdvancedVehicleOptionsUID.ResetConfig();
-                    optionList = AdvancedVehicleOptionsUID.config.options;
+                    AdvancedVehicleOptions.ResetVehicleDataConfig();
+                    optionList = AdvancedVehicleOptions.config.options;
 
                     ExceptionPanel resetpanel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
-                    resetpanel.SetMessage("Advanced Vehicle Options", "All vehicle configuration and customized settings\n" +
-                                                                      "have been reset to the Game Defaults.", false);
+                    resetpanel.SetMessage("Advanced Vehicle Options", Translations.Translate("AVO_MOD_MP54"), false);
                 });
 
             };
@@ -404,11 +415,13 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             m_optionPanel.isVisible = m_fastList.rowsData.m_size > 0;
             m_followVehicle.isVisible = m_preview.parent.isVisible = m_optionPanel.isVisible;
+            Logging.Message("Populating List");
+            //AdvancedVehicleOptions.UpdateOptionPanelInfo();
         }
 
         private void RemoveThisVehicle()
         {
-            //DebugUtils.Log("Current vehicle instance: " + FollowVehicleInstanceID);
+            Logging.Message("Current vehicle instance [for Removing]: " + FollowVehicleInstanceID);
 
             if (FollowVehicleInstanceID != 0)
             {
@@ -448,7 +461,9 @@ namespace AdvancedVehicleOptionsUID.GUI
                     m_cameraController.SetTarget(instanceID, ToolsModifierControl.cameraController.transform.position, Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift));
 
                     FollowVehicleInstanceID = instanceID.Vehicle;
-                    //DebugUtils.Log("Identified last vehicle instance: " + FollowVehicleInstanceID);
+                   
+                    Logging.Message("Identified last vehicle instance [to Follow]: " + FollowVehicleInstanceID);
+                    
                     m_removeVehicle.Show();
 
                     m_seekStart = (i + 1) % vehicles.m_size;
