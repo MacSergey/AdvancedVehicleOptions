@@ -1,0 +1,214 @@
+"CODE","de"
+"NAME","Deutsch"
+"AVO_DESC","Ändere fahrzeugspezifische Werte (kompatibel mit Cities Skylines Airports 1.14.0-f9)."
+"TRN_CHOICE","Sprache festlegen"
+"TRN_TOOLTIP","Wählen Sie die Sprache aus, die für diese Mod verwendet werden soll.
+Benötigt einen Neustart des Spiels. (Standard: Benutze die Spielsprache)"
+"TRN_SYS","Spieleinstellung übernehmen"
+"KEY_KEY","Hotkey im Spiel"
+"KEY_KEY_TT","Definiere einen Hotkey, um das AVO Interface zu aktivieren."
+"KEY_PRS","Beliebige Taste drücken"
+"AVO_OPT_GEN","Allgemeine Einstellungen"
+"AVO_OPT_GEN_ASAVE","Aktiviere automatisches Speichern für Änderungen an Fahrzeugdaten"
+"AVO_OPT_GEN_ASAVE_TT","Wenn aktiviert, werden alle Änderungen an Fahrzeugen sofort gespeichert,
+sobald die Dateneingabe in einem Feld abgeschlossen ist. (Standard: aktiviert)"
+"AVO_OPT_GEN_DEBUG","Aktiviere erweiterte Log-Meldungen"
+"AVO_OPT_GEN_DEBUG_TT","Falls aktiviert, werden zusätzliche Information durch AVO in die Log-Datei des Spiels geschrieben. (Standard: deaktiviert)"
+"AVO_OPT_GEN_GUI","Schaltfläche des Mods ausblenden"
+"AVO_OPT_GEN_GUI_TT","Den UI Button in der Hauptleiste ausblenden. Auf die AVO-Benutzeroberfläche kann jederzeit
+mit dem Hotkey zugegriffen werden. (Standard: deaktiviert - UI-Schaltfläche anzeigen)"
+"AVO_OPT_GEN_SERVICE","Überprüfung auf Service-Verfügbarkeit bei Spielstart"
+"AVO_OPT_GEN_SERVICE_TT","Eine Warnung wird angezeigt, wenn das Spiel gestartet wird und städtischen
+Diensten keine Fahrzeuge zugewiesen wurden. (Standard: aktiviert)"
+"AVO_OPT_BAL","Spieleinstellungen"
+"AVO_OPT_BAL_UNITS","Verwende Meilen pro Stunde (mph) anstelle von Kilometer pro Stunde (km/h)"
+"AVO_OPT_BAL_UNITS_TT","Ändert die Anzeige der Einheit der Geschwindigkeit von mph auf km/h.
+(Standard: deaktiviert - Anzeige in km/h)"
+"AVO_OPT_BAL_EXT","Aktiviere Anzeige zusätzlicher Fahrzeugoptionen"
+"AVO_OPT_BAL_EXT_TT","Falls aktiviert, werden zusätzlich die Feuerlöschrate und Kapazität für Feuerwehr-
+Einheiten, die Kriminialitätsbekämpfungsrate und Kapazität für Polizei-Einheiten,
+die Wartungs- und Pumprate für Wartungs-Einheiten. (Standard: deaktiviert) 
+
+Achtung: Änderungen dieser Werte können die Spielbalance negativ beeinflussen.
+Die Werte sind nicht ausreichend dokumentiert."
+"AVO_OPT_COMP","Kompatibilität"
+"AVO_OPT_COMP_MODS","Zeige Kompatibilitätwarnungen bei Mods"
+"AVO_OPT_COMP_MODS_TT","Falls aktiviert, zeigt AVO alle Werte in roter Warnfarbe, die durch Improved Public Transport (von BloodyPenguin)
+oder Transport Lines Manager (von Klyte) kontrolliert werden. Die Werte sollten nur in diesen Mods geändert werden.
+Falls deaktiviert, wird keine Warnfarbe angezeigt. (Standard: aktiviert)"
+"AVO_OPT_COMP_VCX","Vehicle/Asset Color Expander: Vorrang vor AVO Farboptionen"
+"AVO_OPT_COMP_VCX_TT","Permanente Einstellung, wenn Vehicle/Asset Color Expander (durch Klyte) aktiv ist. 
+Die Farbverwaltung wird von Vehicle/Asset Color Expander kontrolliert. Werte werden
+in Vehicle/Asset Color Expander konfiguriert. (Standard: permanent aktiviert)"
+"AVO_OPT_COMP_NBT","No Big Trucks: Einstellung für Grosse Fahrzeuge"
+"AVO_OPT_COMP_NBT_TT","Wenn aktiviert, können Fahrzeuge mit Anhänger als grosses Fahrzeuge markiert
+werden. Die Belieferung von kleinen Gebäuden duch diese Fahrzeuge wird dann 
+von No Big Trucks (by MacSergey) blockiert. (Standard: aktiviert)"
+"AVO_OPT_COMP_TRL","Fahrzeuganhänger-Referenzen zuletzt aktualisiert:"
+"AVO_OPT_COMP_TRL_TT","Dieses Feld zeigt das Revisionsdatum der Fahrzeugliste für den Bus, Trolley-Bus,
+Feuerwehr- und Polizeianhänger die im Spiel als Anhänger für Industriefahrzeuge
+sind, aber von AVO neu kategorisiert werden können."
+"AVO_OPT_SUP","Support"
+"AVO_OPT_SUP_WIKI","Öffne die Advanced Vehicle Options Wiki"
+"AVO_OPT_SUP_LOG","Öffne das Cities:Skylines Log-Verzeichnis (output_log.txt)"
+"AVO_OPT_SUP_SET","Ordner mit Mod-Konfigurationsdateien öffnen"
+"AVO_OPT_SUP_SET_TT","Dieser Ordner enthält alle Mod-Daten für die manuelle Sicherung: 
+Mod-Einstellungen - AdvancedVehicleOptions_Settings.xml   
+Mod Vehicle Daten - AdvancedVehicleOptions_VehicleData.xml"
+"AVO_MOD_CAPA","Kapazität: "
+"AVO_MOD_BGUIDESC","Modifiziere die Eigenschaften von Fahrzeugen"
+"AVO_MOD_AV01","Die Fahrzeugkonfiguration wurde exportiert. Die Konfigurationsdatei befindet sich hier: "
+"AVO_MOD_AV02","Die folgenden städtischen Dienste werden nicht korrekt funktionieren, da für diese keine Fahrzeuge aktiviert wurden:"
+"AVO_MOD_VO01","Wasser: "
+"AVO_MOD_VO02","Verbrecher: "
+"AVO_MOD_VO03","Pump-Rate: "
+"AVO_MOD_VO04","Fahrdistanz: "
+"AVO_MOD_VO05","Fischfang-Rate: "
+"AVO_MOD_VO06","Unbekannte Kapazität: "
+"AVO_MOD_VO07","Kapazität Passagiere: "
+"AVO_MOD_VO08","Kapazität Fracht: "
+"AVO_MOD_VO09","Kapazität Post: "
+"AVO_MOD_VO10","Kapazität Wartung: "
+"AVO_MOD_VO11","Kapazität Patienten: "
+"AVO_MOD_VO12","Kapazität Leichen: "
+"AVO_MOD_VO13","Bekämpfungsrate: "
+"AVO_MOD_VO14","Feuerlöschrate: "
+"AVO_MOD_VO15","Effizienz-Rate: "
+"AVO_MOD_MP00","Alle Fahrzeuge"
+"AVO_MOD_MP01","Einwohner - Autos"
+"AVO_MOD_MP02","Einwohner - Fahrräder"
+"AVO_MOD_MP03","Industrie - Forst"
+"AVO_MOD_MP04","Industrie - Land"
+"AVO_MOD_MP05","Industrie - Erz"
+"AVO_MOD_MP06","Industrie - Öl"
+"AVO_MOD_MP07","Industrie - Fisch"
+"AVO_MOD_MP08","Industrie - Standard"
+"AVO_MOD_MP09","Industrie - Fabriken"
+"AVO_MOD_MP10","Polizei"
+"AVO_MOD_MP11","Justizvollzug"
+"AVO_MOD_MP12","Feuerwehr"
+"AVO_MOD_MP13","Katastrophenschutz"
+"AVO_MOD_MP14","Gesundheitswesen"
+"AVO_MOD_MP15","Bestattungswesen"
+"AVO_MOD_MP16","Abfall"
+"AVO_MOD_MP17","Abfall-Transfer"
+"AVO_MOD_MP18","Wartung"
+"AVO_MOD_MP19","Post"
+"AVO_MOD_MP20","Bus"
+"AVO_MOD_MP21","Intercity-Bus"
+"AVO_MOD_MP22","Trolley-Bus"
+"AVO_MOD_MP23","Taxi"
+"AVO_MOD_MP24","Metro"
+"AVO_MOD_MP25","Tram"
+"AVO_MOD_MP26","Monorail"
+"AVO_MOD_MP27","Seilbahn"
+"AVO_MOD_MP28","Eisenbahn - Fracht"
+"AVO_MOD_MP29","Eisenbahn - Passagiere"
+"AVO_MOD_MP30","Schiff - Fracht"
+"AVO_MOD_MP31","Schiff - Passagiere"
+"AVO_MOD_MP32","Schiff - Fähre"
+"AVO_MOD_MP33","Flugzeug - Fracht"
+"AVO_MOD_MP34","Flugzeug - Passagiere"
+"AVO_MOD_MP35","Lokaler Flugverkehr"
+"AVO_MOD_MP36","Tourismus + Touren"
+"AVO_MOD_MP37","Abschussrampe"
+"AVO_MOD_MP38","Natur"
+"AVO_MOD_MP39","Wählen Sie eine Kategorie für die Anzeige aus - Tipp: Benutze
+das Mausrad um schneller zwischen den Kategorien zu wechseln."
+"AVO_MOD_MP40","Fahrzeugname eintippen"
+"AVO_MOD_MP41","Aktionen für die Fahrzeugkonfiguration:"
+"AVO_MOD_MP42","Import"
+"AVO_MOD_MP43","Lade eine vorhandene Fahrzeugkonfiguration"
+"AVO_MOD_MP44","Export"
+"AVO_MOD_MP45","Sichere die aktuelle Fahrzeugkonfiguration"
+"AVO_MOD_MP46","Reset"
+"AVO_MOD_MP47","Die Standardeinstellungen für alle Fahrzeuge wieder herstellen"
+"AVO_MOD_MP48","Fahrzeugdaten
+Autosave aktiviert"
+"AVO_MOD_MP49","Autospeichern der Fahrzeugkonfigurationsdaten ist aktiviert. Alle 
+Änderungen werden sofort in der Konfigurationsdatei gespeichert."
+"AVO_MOD_MP50","Hier klicken, um durch alle Fahrzeuge dieses Typs zu springen.
+
+Es werden nur Fahrzeuge berücksichtigt, die sich in Bereichen
+befinden, die dem Spieler gehören. Shift Key gedrückt halten,
+um direkt zu jedem Fahrzeug zu zoomen."
+"AVO_MOD_MP51","Hier klicken, um das ausgewählte Fahrzeug von der Spielwelt zu entfernen."
+"AVO_MOD_MP52","Bestätigung erforderlich"
+"AVO_MOD_MP53","Alle geänderten Fahrzeugwerte werden zurückgesetzt. Soll die Konfiguration zurückgesetzt werden?"
+"AVO_MOD_MP54","Die Fahrzeugkonfiguration und alle geänderten Werte wurden auf die Standardeinstellungen der Fahrzeugeinheiten zurückgesetzt."
+"AVO_MOD_MP55"," Suche:"
+"AVO_MOD_MP56","Kategorie:"
+"AVO_MOD_OP01","km/h"
+"AVO_MOD_OP02","mph"
+"AVO_MOD_OP03"," Achtung: Improved Public Transport ist aktiv und kann diese Einstellung überschreiben."
+"AVO_MOD_OP04"," Achtung: Transport Lines Manager ist aktiv und kann diese Einstellung überschreiben."
+"AVO_MOD_OP05","Aktion für: "
+"AVO_MOD_OP06","Höchstgeschw.: "
+"AVO_MOD_OP07","Ändert die Höchstgeschwindigkeit. 
+
+Wichtig: Fahrzeuge werden nie schneller fahren als die Geschwindigkeits-
+begrenzung des Netzwerks, auf welchem das Fahrzeug unterwegs ist."
+"AVO_MOD_OP08","Beschl./Bremsen/Abbiegen: "
+"AVO_MOD_OP09","Ändere den Beschleunigungsfaktor des Fahrzeugs.
+Definiert, wie schnell das Auto beschleunigt."
+"AVO_MOD_OP10","Ändern Sie den Faktor für das Abbremsen.
+Legt fest, wie stark das Fahrzeug abbremst."
+"AVO_MOD_OP11","Ändert den Faktor für das Abbiegen.
+Definiert, wie gut das Fahrzeug um Kurven geht."
+"AVO_MOD_OP12","Federung/Dämpfer"
+"AVO_MOD_OP13","Ändert den Faktor für Federung.
+Definiert, wie stark die Federung anspricht."
+"AVO_MOD_OP14","Ändert den Faktor für Dämpfer.
+Definiert, wie schnell die Federung wieder 
+in Ausgangslage zurückkehrt."
+"AVO_MOD_OP15","Neigung/Wipp-Multiplikator: "
+"AVO_MOD_OP16","Ändert den Faktor für Neigung.
+Definiert, wie stark sich das Fahrzeug zur
+Seite neigt, wenn es in eine Kurve fährt."
+"AVO_MOD_OP17","Ändert den Faktor für Wippen.
+Definiert, wie stark das Fahrzeug vorwärts/rückwärts
+wippt, wenn es beschleunigt oder abbremst."
+"AVO_MOD_OP18","Aktiviere Farbvariationen:"
+"AVO_MOD_OP19","Aktiviere die Farbvariationen
+Eine Zufallsfarbe wird aus den vier unterhalb
+angezeigten Farben für Fahrzeuge ausgewählt."
+"AVO_MOD_OP20","Farben werden durch den Vehicle/Asset Color Expander festgelegt"
+"AVO_MOD_OP21","Fahrzeug erscheint im Spiel"
+"AVO_MOD_OP22","Stelle sicher, dass mindestens ein Fahrzeug
+in jeder Kategorie im Spiel erscheinen kann."
+"AVO_MOD_OP23","Ersetze den letzten Waggon mit Lokomotive"
+"AVO_MOD_OP24","Der letzte Waggon des Zuges wird mit einer Lokomotive ersetzt."
+"AVO_MOD_OP25","Markierte als Grosses Fahrzeug"
+"AVO_MOD_OP26","Verhindert, dass Fahrzeuge mit Anhänger an kleine Gebäude liefern.
+Dieses Verhalten wird durch No Big Trucks kontrolliert."
+"AVO_MOD_OP27","Kapazität des Fahrzeugs ändern."
+"AVO_MOD_OP28","Spezielle Kapazität: "
+"AVO_MOD_OP29","Ändert erweiterte Parameter dieses Fahrzeugs."
+"AVO_MOD_OP30","Wenn Du nicht weisst, was das hier ist: Nicht ändern!
+Mehr Information im User Guide: Special Capacity."
+"AVO_MOD_OP31","Konfiguriere im Transport Line Overview"
+"AVO_MOD_OP32","Öffnet die Übersicht aller Transportlinien, um 
+die Nahverkehrsfahrzeuge konfigurieren."
+"AVO_MOD_OP33","Hier klicken für den User Guide: Spawn Control"
+"AVO_MOD_OP34","Bus-Anhänger werden durch das Hauptfahrzeug kontrolliert. Die Einstellungen
+für Busse müssen in der Transportlinien-Übersicht konfiguriert werden."
+"AVO_MOD_OP35","Standardwerte"
+"AVO_MOD_OP36","Alle Fahrzeugwerte für dieses Fahrzeug auf Standard zurücksetzen"
+"AVO_MOD_OP37","Globale Aktion für: "
+"AVO_MOD_OP38","Entf. fahrende"
+"AVO_MOD_OP39","Entferne alle fahrenden Fahrzeuge dieses Fahrzeugtyps.
+
+SHIFT Taste gedrückt halten, um alle fahrenden Fahrzeuge
+unabhängig vom gewählten Typ zu entfernen."
+"AVO_MOD_OP40","Entf. geparkte"
+"AVO_MOD_OP41","Entferne alle geparkten Fahrzeuge dieses Fahrzeugtyps.
+
+SHIFT Taste gedrückt halten, um alle fahrenden Fahrzeuge 
+unabhängig vom gewählten Fahrzeugtyp zu entfernen."
+"AVO_MOD_OP42"," wird nicht korrekt funktionieren, da keine Fahrzeuge aktiviert worden sind."
+"AVO_MOD_OP43","Parkposition: "
+"AVO_MOD_OP44","Klein"
+"AVO_MOD_OP45","Mittel"
+"AVO_MOD_OP46","Groß"
+"AVO_MOD_OP47","Fracht"
+"AVO_MOD_WM01","Warnung / Achtung"

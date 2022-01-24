@@ -1,0 +1,199 @@
+CODE,en
+NAME,English
+AVO_DESC,Customize your vehicles (supports Cities Skylines Airports 1.14.0-f4).
+TRN_CHOICE,Set Language
+TRN_TOOLTIP,"Select the Language to be used for this mod. Will require
+restart of the game. (default: Use Game Language)"
+TRN_SYS,Use Game language
+KEY_KEY,In-Game Hotkey
+KEY_KEY_TT,Define a hotkey for the AVO user interface.
+KEY_PRS,Press any key
+AVO_OPT_GEN,General Settings
+AVO_OPT_GEN_ASAVE,Enable Autosaving for Vehicle Configuration Data
+AVO_OPT_GEN_ASAVE_TT,"If enabled, all changes on vehicles will be saved immediately
+once data entry in a field is finalized. (default: enabled)"
+AVO_OPT_GEN_DEBUG,Enable debug messages logging
+AVO_OPT_GEN_DEBUG_TT,"If enabled, mod debug messages will be logged. (default: enabled)"
+AVO_OPT_GEN_GUI,Hide the In-Game toolbar button
+AVO_OPT_GEN_GUI_TT,"Hide the UI button from the main toolbar. The AVO user interface can be
+accessed with the Hotkey anytime. (default: disabled - show UI button)"
+AVO_OPT_GEN_SERVICE,Enable warning for no available services at map loading
+AVO_OPT_GEN_SERVICE_TT,"A warning is shown when game is started and city services
+do not have any vehicles assigned. (default: enabled)"
+AVO_OPT_BAL,Gameplay and Balancing
+AVO_OPT_BAL_UNITS,Display Miles per Hour (mph) instead of Kilometer per Hour (km/h)
+AVO_OPT_BAL_UNITS_TT,"Changes display of unit of speed from mph to km/h.
+(default: disabled - use km/h)"
+AVO_OPT_BAL_EXT,Enable various values for non-cargo and non-passenger vehicles
+AVO_OPT_BAL_EXT_TT,"Allows changes the Firefighting Rate and Capacity for Fire Safety, the 
+Crime Rate Capacity for Police Vehicles, the Maintenance and Pumping Rate
+for Maintenance Vehicles. (default: disabled)
+
+Can de-balance the intended gameplay. Values are not documented."
+AVO_OPT_COMP,Compatibility
+AVO_OPT_COMP_MODS,Display Compatibility Warnings for Mods
+AVO_OPT_COMP_MODS_TT,"If enabled, settings which can be modified in Improved Public Transport (by BloodyPenguin)
+and Transport Lines Manager (by Klyte) will be shown with red warning color. Values should
+be edited in these mods only. If disabled, the coloring will not shown. (default: enabled)"
+AVO_OPT_COMP_VCX,Vehicle/Asset Color Expander: Priority over AVO vehicle coloring
+AVO_OPT_COMP_VCX_TT,"Permanent setting, if Vehicle Color Expander (by Klyte) is active. 
+The color management is controlled by Vehicle Color Expander. Values will 
+be configured in Vehicle/Asset Color Expander. (default: permanent enabled)"
+AVO_OPT_COMP_NBT,No Big Trucks: Classify Generic Industry vehicles as Large Vehicle
+AVO_OPT_COMP_NBT_TT,"If enabled, Delivery Trucks can be tagged as Large Vehicles. Dispatch 
+will be blocked by No Big Trucks (by MacSergey). (default: enabled)"
+AVO_OPT_COMP_TRL,Vehicle Trailer compatibility references last updated:
+AVO_OPT_COMP_TRL_TT,"This field shows the vehicle list revision date for the Bus, 
+Trolley Bus, Fire and Police trailers, which are in real life 
+industry trailers, but have been re-categorized by AVO."
+AVO_OPT_SUP,Support
+AVO_OPT_SUP_WIKI,Open the Advanced Vehicle Options Wiki
+AVO_OPT_SUP_LOG,Open Cities:Skylines log folder (output_log.txt)
+AVO_OPT_SUP_SET,Open Folder with Mod Configuration Files
+AVO_OPT_SUP_SET_TT,"Check for these files for backup: 
+Mod Settings     - AdvancedVehicleOptions_Settings.xml   
+Mod Vehicle Data - AdvancedVehicleOptions_VehicleData.xml"
+AVO_MOD_CAPA,Capacity: 
+AVO_MOD_BGUIDESC,Modify various Vehicle properties
+AVO_MOD_AV01,Your configuration has been exported. The configuration file can be found here: 
+AVO_MOD_AV02,The following services may not work correctly because no vehicles are enabled to spawn:
+AVO_MOD_VO01,Fire Fighting Capacity: 
+AVO_MOD_VO02,Criminal Capacity: 
+AVO_MOD_VO03,Pumping Rate: 
+AVO_MOD_VO04,Travel Distance: 
+AVO_MOD_VO05,Fishing Rate: 
+AVO_MOD_VO06,Unspecificed Capacity: 
+AVO_MOD_VO07,Passenger Capacity: 
+AVO_MOD_VO08,Cargo Capacity: 
+AVO_MOD_VO09,Mail Capacity: 
+AVO_MOD_VO10,Maintenance Capacity: 
+AVO_MOD_VO11,Patient Capacity: 
+AVO_MOD_VO12,Corpse Capacity: 
+AVO_MOD_VO13,Crime Capacity Rate: 
+AVO_MOD_VO14,Fire Fighting Rate: 
+AVO_MOD_VO15,Efficency Rate: 
+AVO_MOD_MP00,All Vehicles
+AVO_MOD_MP01,Citizen - Cars
+AVO_MOD_MP02,Citizen - Bicycle
+AVO_MOD_MP03,Industry - Forestry
+AVO_MOD_MP04,Industry - Farming
+AVO_MOD_MP05,Industry - Ore
+AVO_MOD_MP06,Industry - Oil
+AVO_MOD_MP07,Industry - Fishing
+AVO_MOD_MP08,Industry - Delivery
+AVO_MOD_MP09,Industry - Factories
+AVO_MOD_MP10,Police
+AVO_MOD_MP11,Prison
+AVO_MOD_MP12,Fire Safety
+AVO_MOD_MP13,Disaster Response
+AVO_MOD_MP14,Healthcare
+AVO_MOD_MP15,Deathcare
+AVO_MOD_MP16,Garbage
+AVO_MOD_MP17,Waste Transfer
+AVO_MOD_MP18,Maintenance
+AVO_MOD_MP19,Postal Service
+AVO_MOD_MP20,Bus
+AVO_MOD_MP21,Intercity Bus
+AVO_MOD_MP22,Trolley Bus
+AVO_MOD_MP23,Taxi
+AVO_MOD_MP24,Metro
+AVO_MOD_MP25,Tram
+AVO_MOD_MP26,Monorail
+AVO_MOD_MP27,Cable Car
+AVO_MOD_MP28,Train - Cargo
+AVO_MOD_MP29,Train - Passenger
+AVO_MOD_MP30,Ship - Cargo
+AVO_MOD_MP31,Ship - Cruise
+AVO_MOD_MP32,Ship - Ferry
+AVO_MOD_MP33,Plane - Cargo
+AVO_MOD_MP34,Plane - Passenger
+AVO_MOD_MP35,Local Air Traffic
+AVO_MOD_MP36,Tourism + Tours
+AVO_MOD_MP37,Launch Site
+AVO_MOD_MP38,Natural
+AVO_MOD_MP39,"Select a vehcile category to display - Tipp: Use the
+mouse wheel to switch between categories faster."
+AVO_MOD_MP40,Type the name of a vehicle type
+AVO_MOD_MP41,Actions for Vehicle Configuration:
+AVO_MOD_MP42,Import
+AVO_MOD_MP43,Load an existing vehicle configuration
+AVO_MOD_MP44,Export
+AVO_MOD_MP45,Save the current vehicle configuration
+AVO_MOD_MP46,Reset All
+AVO_MOD_MP47,Reset full configuration
+AVO_MOD_MP48,"Vehicle Data -
+Autosave active"
+AVO_MOD_MP49,"Autosave of Vehicle Config Data is enabled. All changes
+will be saved immediately to external configuration file."
+AVO_MOD_MP50,"Click here to cycle through the existing vehicles of that type.
+Hold down Shift Key for zooming directly to vehicle."
+AVO_MOD_MP51,Click here to remove the selected vehicle.
+AVO_MOD_MP52,Confirm Reset Configuration
+AVO_MOD_MP53,Customized settings for all vehicles will be reset. Proceed with Configuration reset ?
+AVO_MOD_MP54,All vehicle configuration and customized settings have been reset to the Game Defaults.
+AVO_MOD_MP55,Search :
+AVO_MOD_MP56,Category :
+AVO_MOD_OP01,km/h
+AVO_MOD_OP02,mph
+AVO_MOD_OP03, Warning: Improved Public Transport is active and may override this setting.
+AVO_MOD_OP04, Warning: Transport Lines Manager is active and may override this setting.
+AVO_MOD_OP05,Actions for: 
+AVO_MOD_OP06,Maximum speed: 
+AVO_MOD_OP07,"Change the maximum speed of the vehicle. Please note, that vehicles
+will not go beyond speed limits of the network they are utilizing."
+AVO_MOD_OP08,Acceleration/Brake/Turning: 
+AVO_MOD_OP09,"Change the vehicle acceleration factor.
+Defines how fast the car accelerates."
+AVO_MOD_OP10,"Change the vehicle braking factor.
+Defines how quick the car breaks."
+AVO_MOD_OP11,"Change the vehicle turning factor.
+Defines how well the car corners."
+AVO_MOD_OP12,Springs/Dampers
+AVO_MOD_OP13,"Change the vehicle spring factor.
+Defines how much the suspension moves."
+AVO_MOD_OP14,"Change the vehicle damper factor.
+Defines how quickly the suspension returns to the default state."
+AVO_MOD_OP15,Lean/Nod Multiplier: 
+AVO_MOD_OP16,"Change the vehicle lean multiplication factor.
+Defines how much the vehicle leans to the sides when turning."
+AVO_MOD_OP17,"Change the vehicle nod multiplication factor.
+Defines how much the vehicle nods forward/backward when braking or accelerating."
+AVO_MOD_OP18,Enable Color variations:
+AVO_MOD_OP19,"Enable vehicle Color variations.
+A random color is chosen between the four following colors."
+AVO_MOD_OP20,Colors are managed by Vehicle/Asset Color Expander
+AVO_MOD_OP21,Allow this vehicle to spawn
+AVO_MOD_OP22,"Make sure you have at least one vehicle
+allowed to spawn for that category."
+AVO_MOD_OP23,Replace last car with engine
+AVO_MOD_OP24,Make the last car of this train be an engine.
+AVO_MOD_OP25,Flag as Large Vehicle
+AVO_MOD_OP26,"Prevent vehicles with trailer to deliver to small buildings.
+This feature is controlled by the No Big Trucks mod."
+AVO_MOD_OP27,Change the capacity of the vehicle.
+AVO_MOD_OP28,Special Capacity: 
+AVO_MOD_OP29,Change special parameters of the vehicle.
+AVO_MOD_OP30,"If you do not know, what this value is:
+Do not touch it! Click for User Guide: Special Capacity."
+AVO_MOD_OP31,Manage Spawning in Transport Line Overview
+AVO_MOD_OP32,"Open the Transport Line Overview 
+and manage the vehicle spawning."
+AVO_MOD_OP33,Click for User Guide: Spawn Control
+AVO_MOD_OP34,"Bus trailers spawning is controlled by the main Bus vehicle.
+Settings must be configured from the Transport Line Overview panel."
+AVO_MOD_OP35,Default Values
+AVO_MOD_OP36,Restore all values to default
+AVO_MOD_OP37,Global Actions for: 
+AVO_MOD_OP38,Remove Driving
+AVO_MOD_OP39,"Remove all driving vehicles of that type.
+Hold the SHIFT key to remove all types."
+AVO_MOD_OP40,Remove Parked
+AVO_MOD_OP41,"Remove all parked vehicles of that type.
+Hold the SHIFT key to remove all types."
+AVO_MOD_OP42, may not work correctly because no vehicles are allowed to spawn.
+AVO_MOD_OP43,Stand Size: 
+AVO_MOD_OP44,Small
+AVO_MOD_OP45,Medium
+AVO_MOD_OP46,Large
+AVO_MOD_OP47,Cargo
+AVO_MOD_WM01,Warning
