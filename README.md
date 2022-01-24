@@ -1,3 +1,14 @@
+# CS-AdvancedVehicleOptions 1.9.7
+* Fixed - More Vehicle compatibility issue which leads to a simulation freeze by infinite loop
+* New - Support for Airports DLCs new Aircraft types
+* New - Aircrafts now show the required parking stand type
+* New - Hotkey for GUI (ALT+SHIFT+O)
+* New - Autosave for Vehicle data to XML (save to XML on each change in any data field), added button in Mod Options
+* New - Added button in the Mod Options for easy access to AVO config files (vehicles, settings)
+* New - Multilanguage support with algernon's Translation Framework with support for Crowdin (EN and DE language supported out of the box) 
+* Change - New configuration settings file (XML format, new storage path)
+* Change - Renamed vehicle settings file 
+
 # CS-AdvancedVehicleOptions 1.9.6
 * Fixed - incorporated bug fixes by Kryzchu124
 
