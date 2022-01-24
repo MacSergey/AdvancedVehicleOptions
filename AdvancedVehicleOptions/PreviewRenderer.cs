@@ -102,8 +102,6 @@ namespace AdvancedVehicleOptionsUID
             Quaternion rotation = Quaternion.Euler(20f, 0f, 0f) * Quaternion.Euler(0f, m_rotation, 0f);
             Vector3 position = rotation * -info.m_mesh.bounds.center;
 
-            // Vector3 swayPosition = Vector3.zero;        (commenting out, as never used)
-
             VehicleManager instance = Singleton<VehicleManager>.instance;
             Matrix4x4 matrixBody = Matrix4x4.TRS(position, rotation, Vector3.one);
             Matrix4x4 matrixTyre = info.m_vehicleAI.CalculateTyreMatrix(Vehicle.Flags.Created, ref position, ref rotation, ref one, ref matrixBody);

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -31,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SteamPath>~/Library/Application Support/Steam/</SteamPath>
@@ -66,7 +68,6 @@
     <Compile Include="Compatibility\TLMCompatibilityPatch.cs" />
     <Compile Include="Compatibility\TrailerVehiclesCompatibilityPatch.cs" />
     <Compile Include="Compatibility\VCXCompatibilityPatch.cs" />
-    <Compile Include="DebugUtils.cs" />
     <Compile Include="GUI\UIFastList.cs" />
     <Compile Include="GUI\UIOptionPanel.cs" />
     <Compile Include="GUI\UIMainPanel.cs" />
@@ -79,6 +80,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="SerializableDataExtension.cs" />
+    <Compile Include="Settings\ModSettings.cs" />
+    <Compile Include="Settings\OptionsKeymapping.cs" />
+    <Compile Include="Translation\Language.cs" />
+    <Compile Include="Translation\TranslationFramework.cs" />
+    <Compile Include="UIThreading.cs" />
+    <Compile Include="Utils\Logging.cs" />
+    <Compile Include="Utils\ModUtils.cs" />
     <Compile Include="VehicleOptions.cs" />
   </ItemGroup>
   <ItemGroup>

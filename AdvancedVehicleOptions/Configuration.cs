@@ -95,7 +95,7 @@ namespace AdvancedVehicleOptionsUID
             }
             catch (Exception e)
             {
-                DebugUtils.LogException(e);
+                Logging.LogException(e);
             }
         }
 
@@ -109,7 +109,7 @@ namespace AdvancedVehicleOptionsUID
                 int count = s.ReadInt32();
                 data = new VehicleData[count];
 
-                DebugUtils.Log("AVO Savegame Version " + s.version);
+                Logging.Message("AVO Savegame Version " + s.version);
 
                 for (int i = 0; i < count; i++)
                 {
@@ -147,8 +147,8 @@ namespace AdvancedVehicleOptionsUID
             catch (Exception e)
             {
                 // Couldn't Deserialize
-                DebugUtils.Warning("Couldn't deserialize");
-                DebugUtils.LogException(e);
+                Logging.Error("Couldn't deserialize");
+                Logging.LogException(e);
             }
         }
 
@@ -161,7 +161,7 @@ namespace AdvancedVehicleOptionsUID
         {
             try
             {
-                if (AdvancedVehicleOptionsUID.isGameLoaded) OptionsToData();
+                if (AdvancedVehicleOptions.isGameLoaded) OptionsToData();
 
                 // Add back default vehicle options that might not exist on the map
                 // I.E. Snowplow on non-snowy maps
@@ -194,13 +194,13 @@ namespace AdvancedVehicleOptionsUID
                     stream.SetLength(0); // Emptying the file !!!
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(Configuration));
                     xmlSerializer.Serialize(stream, this);
-                    DebugUtils.Log("Configuration saved");
+                    Logging.Message("XML Stream Vehicle Configuration successfully saved");
                 }
             }
             catch (Exception e)
             {
-                DebugUtils.Warning("Couldn't save configuration at \"" + Directory.GetCurrentDirectory() + "\"");
-                DebugUtils.LogException(e);
+                Logging.Error("Couldn't save configuration at \"" + Directory.GetCurrentDirectory() + "\"");
+                Logging.LogException(e);
             }
         }
 
@@ -223,8 +223,8 @@ namespace AdvancedVehicleOptionsUID
             catch (Exception e)
             {
                 // Couldn't Deserialize (XML malformed?)
-                DebugUtils.Warning("Couldn't load configuration (XML malformed?)");
-                DebugUtils.LogException(e);
+                Logging.Error("Couldn't load configuration (XML malformed?)");
+                Logging.LogException(e);
 
                 config = null;
             }
@@ -246,7 +246,7 @@ namespace AdvancedVehicleOptionsUID
                 }
 
 
-                if (AdvancedVehicleOptionsUID.isGameLoaded) DataToOptions();
+                if (AdvancedVehicleOptions.isGameLoaded) DataToOptions();
             }
         }
 

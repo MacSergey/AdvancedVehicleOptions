@@ -28,20 +28,20 @@ namespace AdvancedVehicleOptionsUID
             var data = serializableDataManager.LoadData(ID);
             using (var ms = new MemoryStream(data))
             {
-                AdvancedVehicleOptionsUID.config.data = DataSerializer.Deserialize<Configuration>(ms, DataSerializer.Mode.Memory).data;
+                AdvancedVehicleOptions.config.data = DataSerializer.Deserialize<Configuration>(ms, DataSerializer.Mode.Memory).data;
             }
         }
 
         public override void OnSaveData()
         {
             if (ToolManager.instance.m_properties.m_mode != ItemClass.Availability.Game ||
-                AdvancedVehicleOptionsUID.config == null)
+                AdvancedVehicleOptions.config == null)
             {
                 return;
             }
             using (var ms = new MemoryStream())
             {
-                DataSerializer.Serialize(ms, DataSerializer.Mode.Memory, VERSION, AdvancedVehicleOptionsUID.config);
+                DataSerializer.Serialize(ms, DataSerializer.Mode.Memory, VERSION, AdvancedVehicleOptions.config);
                 var data = ms.ToArray();
                 serializableDataManager.SaveData(ID, data);
             }

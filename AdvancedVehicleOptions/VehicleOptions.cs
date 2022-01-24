@@ -70,7 +70,7 @@ namespace AdvancedVehicleOptionsUID
 
                 VehicleInfo prefab = PrefabCollection<VehicleInfo>.FindLoaded(value);
                 if (prefab == null)
-                    DebugUtils.Log("Couldn't find " + value);
+                    Logging.Message("Couldn't find " + value);
                 else
                     SetPrefab(prefab);
             }
@@ -623,6 +623,7 @@ namespace AdvancedVehicleOptionsUID
             get { return prefab.m_class.m_service == ItemClass.Service.PublicTransport; }
         }
 
+
         // Define all vehicles, where AVO cannot longer control the spawning (Bus, Biofuel Bus, Trolley Bus, Tour Bus, Tram, Metro, Helicopter, Ferry, Blimp, Monorail)
         public bool isPublicTransportGame
         {
@@ -632,9 +633,9 @@ namespace AdvancedVehicleOptionsUID
                                                      || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportTours && prefab.m_class.m_level == ItemClass.Level.Level3
                                                      || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportTram
                                                      || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportMetro
-                                                     || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportPlane && prefab.m_class.m_level == ItemClass.Level.Level3
+                                                     || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportPlane && prefab.m_vehicleType == VehicleInfo.VehicleType.Blimp
                                                      || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportShip && prefab.m_class.m_level == ItemClass.Level.Level2
-                                                     || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportPlane && prefab.m_class.m_level == ItemClass.Level.Level2
+                                                     || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportPlane && prefab.m_vehicleType == VehicleInfo.VehicleType.Helicopter
                                                      || prefab.m_class.m_subService == ItemClass.SubService.PublicTransportMonorail; }
         }
 
@@ -694,19 +695,19 @@ namespace AdvancedVehicleOptionsUID
             {
                 switch (m_prefab.m_vehicleAI)
                 { case FireCopterAI _:
-                        return "FireFighting Capacity: ";
+                        return Translations.Translate("AVO_MOD_VO01");
                     case PoliceCarAI _:
-                        return "Criminal Capacity: ";
+                        return Translations.Translate("AVO_MOD_VO02");
                     case WaterTruckAI _:
-                        return "Pumping Rate: ";
+                        return Translations.Translate("AVO_MOD_VO03");
                     case TaxiAI _:
-                        return "Travel Distance: ";
+                        return Translations.Translate("AVO_MOD_VO04");
                     case AmbulanceCopterAI _:
-                        return "Travel Distance: ";
+                        return Translations.Translate("AVO_MOD_VO04");
                     case FishingBoatAI _:
-                        return "Fishing Rate: ";
+                        return Translations.Translate("AVO_MOD_VO05");
                 }
-                return "Unspecified Capacity: ";
+                return Translations.Translate("AVO_MOD_VO06");
             }
         }
 
@@ -726,7 +727,7 @@ namespace AdvancedVehicleOptionsUID
                     case PassengerTrainAI _:
                     case TramAI _:
                     case CableCarAI _:
-                        return "Passenger Capactiy: ";
+                        return Translations.Translate("AVO_MOD_VO07");
 
                     case CargoPlaneAI _:
                     case CargoTruckAI _:
@@ -736,35 +737,35 @@ namespace AdvancedVehicleOptionsUID
                     case CargoShipAI _:
                     case CargoTrainAI _:
                     case FishingBoatAI _:
-                        return "Cargo Capacity: ";
+                        return Translations.Translate("AVO_MOD_VO08");
 
                     case PostVanAI _:
-                        return "Mail Capacity:";
+                        return Translations.Translate("AVO_MOD_VO09");
 
                     case MaintenanceTruckAI _:
                     case ParkMaintenanceVehicleAI _:
-                        return "Maintenance Capacity:";
+                        return Translations.Translate("AVO_MOD_VO10");
 
                     case AmbulanceAI _:
                     case AmbulanceCopterAI _:
-                        return "Patient Capacity:";
+                        return Translations.Translate("AVO_MOD_VO11");
 
                     case HearseAI _:
-                        return "Corpse Capacity:";
+                        return Translations.Translate("AVO_MOD_VO12");
 
                     case PoliceCarAI _:
                     case PoliceCopterAI _:
-                        return "Crime Capacity Rate:";
+                        return Translations.Translate("AVO_MOD_VO13");
 
                     case FireTruckAI _:
                     case FireCopterAI _:
-                        return "Fire Fighting Rate:";
+                        return Translations.Translate("AVO_MOD_VO14");
 
                     case DisasterResponseVehicleAI _:
                     case DisasterResponseCopterAI _:
-                        return "Efficency Rate:";
+                        return Translations.Translate("AVO_MOD_VO15");
                 }
-                return "Capacity: ";
+                return Translations.Translate("AVO_MOD_CAPA");
             }
         }
 
@@ -935,6 +936,9 @@ namespace AdvancedVehicleOptionsUID
                         if (prefab.m_class.m_level == ItemClass.Level.Level1)
                             return Category.TransportTrain;
                         else
+                        if (prefab.m_class.m_level == ItemClass.Level.Level2)
+                            return Category.TransportTrain;
+                        else
                             return Category.CargoTrain;
 						
                     case ItemClass.SubService.PublicTransportShip:
@@ -955,12 +959,13 @@ namespace AdvancedVehicleOptionsUID
                     case ItemClass.SubService.PublicTransportPlane:
                         if (prefab.m_class.m_level == ItemClass.Level.Level4)
                             return Category.CargoPlane;
-						else
-						if (prefab.m_class.m_level == ItemClass.Level.Level1)
+                        if (prefab.m_vehicleType == VehicleInfo.VehicleType.Helicopter)
+                            return Category.TransportBlimp;
+                        if (prefab.m_vehicleType == VehicleInfo.VehicleType.Blimp)
+                            return Category.TransportBlimp;
+                        else
                             return Category.TransportPlane;
-						else
-                            return Category.TransportBlimp;		
-						
+							
                     case ItemClass.SubService.IndustrialForestry:
                         return Category.Forestry;
 						
@@ -1131,7 +1136,7 @@ namespace AdvancedVehicleOptionsUID
 
             if (count > 0)
             {
-                DebugUtils.Log("Modified capacity of " + count + " vehicle(s). Total unit count: " + CitizenManager.instance.m_unitCount + "/" + CitizenManager.MAX_UNIT_COUNT);
+                Logging.Message("Modified capacity of " + count + " vehicle(s). Total unit count: " + CitizenManager.instance.m_unitCount + "/" + CitizenManager.MAX_UNIT_COUNT);
             }
         }
 
@@ -1166,8 +1171,8 @@ namespace AdvancedVehicleOptionsUID
                 }
                 catch (Exception e)
                 {
-                    DebugUtils.Log("Couldn't update back engine :");
-                    Debug.LogError(e);
+                    Logging.Error("Couldn't update back engine :");
+                    Logging.LogException(e);
                 }
             }
 
@@ -1184,8 +1189,8 @@ namespace AdvancedVehicleOptionsUID
                 }
                 catch(Exception e)
                 {
-                    DebugUtils.Log("Couldn't update transfer vehicles :");
-                    Debug.LogError(e);
+                    Logging.Error("Couldn't update transfer vehicles :");
+                    Logging.LogException(e);
                 }
             });
         }
@@ -1268,7 +1273,7 @@ namespace AdvancedVehicleOptionsUID
                     }
                     catch (Exception e)
                     {
-                        DebugUtils.LogException(e);
+                        Logging.LogException(e);
                     }
                 }
             }
@@ -1408,7 +1413,7 @@ namespace AdvancedVehicleOptionsUID
             for (uint i = 0; i < PrefabCollection<VehicleInfo>.PrefabCount(); i++)
                 DefaultOptions.Store(PrefabCollection<VehicleInfo>.GetPrefab(i));
 
-            DebugUtils.Log("Default values stored");
+            Logging.Message("Default values stored");
         }
 
         public static void StoreAllModded()
@@ -1529,7 +1534,7 @@ namespace AdvancedVehicleOptionsUID
             if (conflicts.Length > 0)
             {
                 VehicleOptions.UpdateTransfertVehicles();
-                DebugUtils.Log("Conflicts detected (this message is harmless):" + Environment.NewLine + conflicts);
+                Logging.Message("Conflicts detected (this message is harmless):" + Environment.NewLine + conflicts);
             }
         }
 

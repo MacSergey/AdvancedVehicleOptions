@@ -3,196 +3,243 @@ using UnityEngine;
 
 using System;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
 using ColossalFramework;
-using ColossalFramework.Threading;
 using ColossalFramework.UI;
+using ColossalFramework.IO;
 
 using AdvancedVehicleOptionsUID.Compatibility;
+using AdvancedVehicleOptionsUID.GUI;
 
 namespace AdvancedVehicleOptionsUID
 {
-    public class ModInfo : IUserMod
+    public class AVOMod : IUserMod
+
     {
-        public ModInfo()
+    public static string ModName => "Advanced Vehicle Options";
+    //public static string Version => "1.9.7 b6 24012022";
+    public static string Version => "1.9.7";
+    public string Name => ModName + " " + Version;
+
+    public AVOMod()
         {
             try
             {
                 // Creating setting file
-                GameSettings.AddSettingsFile(new SettingsFile[] { new SettingsFile() { fileName = AdvancedVehicleOptionsUID.settingsFileName } });
+                GameSettings.AddSettingsFile(new SettingsFile[] { new SettingsFile() { fileName = AdvancedVehicleOptions.settingsFileName } });
             }
             catch (Exception e)
             {
-                DebugUtils.Log("Couldn't load/create the setting file.");
-                DebugUtils.LogException(e);
+                Logging.Error("Couldn't load/create the setting file.");
+                Logging.LogException(e);
             }
-        }
-
-        public string Name
-        {
-            get { return "Advanced Vehicle Options " + version; }
         }
 
         public string Description
         {
-            get { return "Customize your vehicles (supports Cities Skylines Sunset Harbor 1.13.0-f8)."; }
+            get { return (Translations.Translate("AVO_DESC")); }        // The Mod Description in the Content Manager
+        }
+
+        public void OnEnabled()
+        {
+            // Load the settings file.
+            ModSettings.Load();
         }
 
         public void OnSettingsUI(UIHelperBase helper)
         {
             try
             {
-                UICheckBox checkBox;	
-				UITextField TextField;
-				UIButton Button;
+                // Section for General Settings
 
-// Section for General Settings
+                UIHelperBase Group_General = helper.AddGroup(Translations.Translate("AVO_OPT_GEN") + " - " + Name);
 
-                UIHelperBase group_general = helper.AddGroup("General Settings                                                   " + Name);
+                // Checkbox for Autosave Config
 
-                checkBox = (UICheckBox)group_general.AddCheckbox("Disable debug messages logging", DebugUtils.hideDebugMessages.value, (b) =>
+                UICheckBox AutoSaveVehicleConfig_Box = (UICheckBox)Group_General.AddCheckbox(Translations.Translate("AVO_OPT_GEN_ASAVE"), AdvancedVehicleOptions.AutoSaveVehicleConfig, (b) =>
                 {
-                    DebugUtils.hideDebugMessages.value = b;
-                });
-                checkBox.tooltip = "If checked, debug messages will not be logged.";
-
-                group_general.AddSpace(10);
-
-                checkBox = (UICheckBox)group_general.AddCheckbox("Hide the user interface", AdvancedVehicleOptionsUID.hideGUI.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.hideGUI.value = b;
-                    AdvancedVehicleOptionsUID.UpdateGUI();
-
-                });
-                checkBox.tooltip = "Hide the UI completely if you feel like you are done with it and want to save\n" +
-                                   "the little bit of memory it takes. Everything else will still be functional.";
-
-                checkBox = (UICheckBox)group_general.AddCheckbox("Disable warning for no available services at map loading", !AdvancedVehicleOptionsUID.onLoadCheck.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.onLoadCheck.value = !b;
-                });
-                checkBox.tooltip = "Disable the check for missing service vehicles assigned in any category when loading a map.";
-
-// Section for Game Balancing
-
-                UIHelperBase group_balance = helper.AddGroup("Gameplay & Balancing");
-
-// Checkbox for SpeedUnitOption kmh vs mph	
-
-                checkBox = (UICheckBox)group_balance.AddCheckbox("Display Miles per Hour (mph) instead of Kilometer per Hour (km/h)", AdvancedVehicleOptionsUID.SpeedUnitOption.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.SpeedUnitOption.value = b;
-                });
-                checkBox.tooltip = "Changes display of unit of speed from mph to km/h.";
-
-// Checkbox for Game Balancing	
-
-                checkBox = (UICheckBox)group_balance.AddCheckbox("Enable various values for non-cargo and non-passenger vehicles", AdvancedVehicleOptionsUID.GameBalanceOptions.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.GameBalanceOptions.value = b;
-                });
-                checkBox.tooltip = "Allows changes the Firefighting Rate and Capacity for Fire Safety, the Crime Rate Capacity\n" +
-                                   "for Police Vehicles and the Maintenance and Pumping Rate for Maintenance Vehicles.\n\n" +
-                                   "Can de-balance the intended gameplay. Some values are not documented.";
-
-// Section for Compatibility
-
-                UIHelperBase group_compatibility = helper.AddGroup("Compatibility");
-
-// Checkbox for Overriding Incompability Warnings
-
-                checkBox = (UICheckBox)group_compatibility.AddCheckbox("Display Compatibility Warnings for Mods", AdvancedVehicleOptionsUID.OverrideCompatibilityWarnings.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.OverrideCompatibilityWarnings.value = b;
+                    AdvancedVehicleOptions.AutoSaveVehicleConfig = b;
+                    ModSettings.Save();
+                    AdvancedVehicleOptions.UpdateOptionPanelInfo();
                 });
 
-                checkBox.tooltip = "If enabled, settings which can be modified in Improved Public Transport\n" +
-                                   "(by BloodyPenguin) and Transport Lines Manager (by Klyte) will be shown\n" +
-                                   "with warning color. Values should be edited in these mods only.\n\n" +
-                                   "If disabled, the coloring will not shown.";
-                //True, if AVO shall shall color shared mod setting values in red.
+                AutoSaveVehicleConfig_Box.tooltip = Translations.Translate("AVO_OPT_GEN_ASAVE_TT");
 
-// Checkbox for Vehicle Color Expander
+                // Checkbox for validating services
 
-                checkBox = (UICheckBox) group_compatibility.AddCheckbox("Vehicle Color Expander: Priority over AVO vehicle coloring", AdvancedVehicleOptionsUID.OverrideVCX.value, (b) =>
+                UICheckBox ValidateMissingServices_Box = (UICheckBox)Group_General.AddCheckbox(Translations.Translate("AVO_OPT_GEN_SERVICE"), AdvancedVehicleOptions.OnLoadValidateServices, (b) =>
                 {
-                    AdvancedVehicleOptionsUID.OverrideVCX.value = b;
-                });
-				
-                checkBox.tooltip = "Permanent setting, if Vehicle Color Expander (by Klyte) is active.\n" +
-                                   "The color management is controlled by Vehicle Color Expander.\n\n" +
-                                   "Values will be configured in Vehicle Color Expander.";	
-				
-				//True, if AVO shall not override Vehicle Color Expander settings. As there is not Settings for Vehicle Color Expander. AVO will show the option, but user cannot change anything as long readOnly is True.
-				checkBox.readOnly = true;
-				checkBox.label.textColor = Color.gray;		
-				
-				if (!VCXCompatibilityPatch.IsVCXActive())
-				{
-				    checkBox.enabled  = false;	//Do not show the option Checkbox, if Vehicle Color Expander is not active.
-				}
-		
-// Checkbox for No Big Trucks
-
-                checkBox = (UICheckBox)group_compatibility.AddCheckbox("No Big Trucks: Classify Generic Industry vehicles as Large Vehicle", AdvancedVehicleOptionsUID.ControlTruckDelivery.value, (b) =>
-                {
-                    AdvancedVehicleOptionsUID.ControlTruckDelivery.value = b;
+                    AdvancedVehicleOptions.OnLoadValidateServices = b;
+                    ModSettings.Save();
                 });
 
-                checkBox.tooltip = "If enabled, Delivery Trucks can be tagged as Large Vehicles.\n" +
-                                   "Dispatch will be blocked by No Big Trucks (by MacSergey)." +
-                                   "Warning: Experimental feature and may have impact on the simulation.";
+                ValidateMissingServices_Box.tooltip = Translations.Translate("AVO_OPT_GEN_SERVICE_TT");
+
+                // Checkbox for Debug Setting
+
+                UICheckBox DebugMsg_Box = (UICheckBox)Group_General.AddCheckbox(Translations.Translate("AVO_OPT_GEN_DEBUG"), Logging.detailLogging, (b) =>
+                {
+                    Logging.detailLogging = b;
+                    ModSettings.Save();
+                });
+
+                DebugMsg_Box.tooltip = Translations.Translate("AVO_OPT_GEN_DEBUG_TT");
+
+                Group_General.AddSpace(1);
+
+                // Checkbox for GUI Button
+
+                UICheckBox HideButton_Box = (UICheckBox)Group_General.AddCheckbox(Translations.Translate("AVO_OPT_GEN_GUI"), AdvancedVehicleOptions.HideGUIbutton, (b) =>
+                {
+                    AdvancedVehicleOptions.HideGUIbutton = b;
+                    AdvancedVehicleOptions.UpdateGUI();
+                    ModSettings.Save();
+                });
+
+                HideButton_Box.tooltip = Translations.Translate("AVO_OPT_GEN_GUI_TT");
+
+                // Datafield for Hot Key
+
+                HideButton_Box.parent.gameObject.AddComponent<OptionsKeymapping>();
+
+                // Checkbox for Language Option
+
+                UIDropDown Language_DropDown = (UIDropDown)Group_General.AddDropdown(Translations.Translate("TRN_CHOICE"), Translations.LanguageList, Translations.Index, (value) => 
+                {
+                    Translations.Index = value;
+                    ModSettings.Save();
+                });
+
+                Language_DropDown.tooltip = Translations.Translate("TRN_TOOLTIP");
+                Language_DropDown.autoSize = false;
+                Language_DropDown.width = 270f;
+
+                // Section for Game Balancing
+
+                UIHelperBase Group_Balance = helper.AddGroup(Translations.Translate("AVO_OPT_BAL"));
+
+                // Checkbox for SpeedUnitOption kmh vs mph	
+
+                UICheckBox SpeedUnitOptions_Box = (UICheckBox)Group_Balance.AddCheckbox(Translations.Translate("AVO_OPT_BAL_UNITS"), AdvancedVehicleOptions.SpeedUnitOption, (b) =>
+                {
+                    AdvancedVehicleOptions.SpeedUnitOption = b;
+                    ModSettings.Save();
+                    AdvancedVehicleOptions.UpdateOptionPanelInfo();
+                });
+
+                SpeedUnitOptions_Box.tooltip = Translations.Translate("AVO_OPT_BAL_UNITS_TT");
+
+                // Checkbox for Game Balancing	
+
+                UICheckBox ExtendedValues_Box = (UICheckBox)Group_Balance.AddCheckbox(Translations.Translate("AVO_OPT_BAL_EXT"), AdvancedVehicleOptions.ShowMoreVehicleOptions, (b) =>
+                {
+                    AdvancedVehicleOptions.ShowMoreVehicleOptions = b;
+                    ModSettings.Save();
+                });
+
+                ExtendedValues_Box.tooltip = Translations.Translate("AVO_OPT_BAL_EXT_TT");
+
+                // Section for Compatibility
+
+                UIHelperBase Group_Compatibility = helper.AddGroup(Translations.Translate("AVO_OPT_COMP"));
+
+                // Checkbox for Overriding Incompability Warnings
+
+                UICheckBox DisplayCompatibility_Box = (UICheckBox)Group_Compatibility.AddCheckbox(Translations.Translate("AVO_OPT_COMP_MODS"), AdvancedVehicleOptions.OverrideCompatibilityWarnings, (b) =>
+                {
+                    AdvancedVehicleOptions.OverrideCompatibilityWarnings = b;
+                    ModSettings.Save();
+                });
+
+                DisplayCompatibility_Box.tooltip = Translations.Translate("AVO_OPT_COMP_MODS_TT");
+
+                // Default = True, as AVO shall color shared mod setting values in red.
+
+                // Checkbox for Vehicle Color Expander
+
+                UICheckBox OverrideVCX_Box = (UICheckBox)Group_Compatibility.AddCheckbox(Translations.Translate("AVO_OPT_COMP_VCX"), AdvancedVehicleOptions.OverrideVCX, (b) =>
+                {
+                    AdvancedVehicleOptions.OverrideVCX = b;
+                    ModSettings.Save();
+                });
+
+                OverrideVCX_Box.tooltip = Translations.Translate("AVO_OPT_COMP_VCX_TT");
+
+                //Always True, if AVO shall not override Vehicle Color Expander / Asset Color Expander settings. As there is no Settings for Vehicle Color Expander / Asset Color Expander. AVO will show the option, but user cannot change anything as long readOnly is True.
+
+                OverrideVCX_Box.readOnly = true;
+                OverrideVCX_Box.label.textColor = Color.gray;
+
+                if (!VCXCompatibilityPatch.IsVCXActive() | !VCXCompatibilityPatch.IsACXActive())
+                {
+                    OverrideVCX_Box.enabled = false;    //Do not show the option Checkbox, if Vehicle Color Expander / Asset Color Expander is not active.
+                }
+
+                // Checkbox for No Big Trucks
+
+                UICheckBox NoBigTrucks_Box = (UICheckBox)Group_Compatibility.AddCheckbox(Translations.Translate("AVO_OPT_COMP_NBT"), AdvancedVehicleOptions.ControlTruckDelivery, (b) =>
+                {
+                    AdvancedVehicleOptions.ControlTruckDelivery = b;
+                    ModSettings.Save();
+                });
+
+                NoBigTrucks_Box.tooltip = Translations.Translate("AVO_OPT_COMP_NBT_TT");
                 //True, if AVO shall be enabled to classify Generic Industry vehicles as Large Vehicles, so No Big Trucks can suppress the dispatch to small buildings.
 
                 if (!NoBigTruckCompatibilityPatch.IsNBTActive() | !NoBigTruckCompatibilityPatch.IsNBTBetaActive())
                 {
-                    checkBox.enabled = false;   //Do not show the option Checkbox, if No Big Trucks is not active.
+                    NoBigTrucks_Box.enabled = false;   //Do not show the option Checkbox, if No Big Trucks is not active.
                 }
 
-// Add a Spacer
-                group_compatibility.AddSpace(2);
+                // Add Trailer Compatibility Reference
 
-// Add Trailer Compatibility Reference
+                UITextField TrailerCompatibilityList_Textfield = (UITextField)Group_Compatibility.AddTextfield(Translations.Translate("AVO_OPT_COMP_TRL"), TrailerRef.Revision, (value) =>
+                {
+                    Logging.KeyMessage("Using Trailer Configuration file: "+ TrailerRef.Revision, value);
+                });
 
-                TextField = (UITextField) group_compatibility.AddTextfield("Vehicle Trailer compatibility references last updated:", TrailerRef.Revision, (value) => Debug.Log(""), (value) => Debug.Log(""));
-				TextField.tooltip = "This field shows the vehicle list revision date for the Bus, Trolley Bus, Fire and Police\n" +
-                                    "trailers, which are in real life industry trailers, but have been re-categorized by AVO.";
-				TextField.readOnly = true;
+                TrailerCompatibilityList_Textfield.tooltip = Translations.Translate("AVO_OPT_COMP_TRL_TT");
+                TrailerCompatibilityList_Textfield.readOnly = true;
 
  // Support Section with Wiki and Output-Log	
 
-                UIHelperBase group_support = helper.AddGroup("Support");
+                UIHelperBase Group_Support = helper.AddGroup(Translations.Translate("AVO_OPT_SUP"));
 				
-				Button = (UIButton) group_support.AddButton("Open the Advanced Vehicle Options Wiki", () =>
+				UIButton Wikipedia_Button = (UIButton)Group_Support.AddButton(Translations.Translate("AVO_OPT_SUP_WIKI"), () =>
                 {
                     SimulationManager.instance.SimulationPaused = true;
                     Application.OpenURL("https://github.com/CityGecko/CS-AdvancedVehicleOptions/wiki");
                 });
-				Button.textScale = 0.8f;
-				
-				Button = (UIButton) group_support.AddButton("Open Cities:Skylines log folder (output_log.txt)", () =>
+                Wikipedia_Button.textScale = 0.8f;
+
+                UIButton OutputLog_Button = (UIButton)Group_Support.AddButton(Translations.Translate("AVO_OPT_SUP_LOG"), () =>
                 {
                     Utils.OpenInFileBrowser(Application.dataPath);
                 });
-				Button.textScale = 0.8f;
-			}	
+                OutputLog_Button.textScale = 0.8f;
+
+                UIButton AVOLog_Button = (UIButton)Group_Support.AddButton(Translations.Translate("AVO_OPT_SUP_SET"), () =>
+                {
+                    // Utils.OpenInFileBrowser(Application.streamingAssetsPath);
+                    Utils.OpenInFileBrowser(DataLocation.localApplicationData);
+                  });
+                AVOLog_Button.textScale = 0.8f;
+                AVOLog_Button.tooltip = (Translations.Translate("AVO_OPT_SUP_SET_TT"));
+            }	
 			
             catch (Exception e)
             {
-                DebugUtils.Log("OnSettingsUI failed");
-                DebugUtils.LogException(e);
+                Logging.Error("OnSettingsUI failed");
+                Logging.LogException(e);
             }
         }
-
-        public const string version = "1.9.6";
     }
 
-    public class AdvancedVehicleOptionsUIDLoader : LoadingExtensionBase
+    public class AdvancedVehicleOptionsLoader : LoadingExtensionBase
     {
-        private static AdvancedVehicleOptionsUID instance;
+        private static AdvancedVehicleOptions instance;
 
         #region LoadingExtensionBase overrides
         /// <summary>
@@ -206,28 +253,28 @@ namespace AdvancedVehicleOptionsUID
                 if (mode != LoadMode.LoadGame && mode != LoadMode.NewGame && mode != LoadMode.NewGameFromScenario)
                 {
                     DefaultOptions.Clear();
-			        DebugUtils.Log("AVO Incompatible GameMode " + mode);
+			        Logging.Error("AVO Incompatible GameMode " + mode);
                     return;
                 }
 
-                AdvancedVehicleOptionsUID.isGameLoaded = true;
+                AdvancedVehicleOptions.isGameLoaded = true;
 
                 if (instance != null)
                 {
                     GameObject.DestroyImmediate(instance.gameObject);
                 }
 
-                instance = new GameObject("AdvancedVehicleOptionsUID").AddComponent<AdvancedVehicleOptionsUID>();
+                instance = new GameObject("AdvancedVehicleOptions").AddComponent<AdvancedVehicleOptions>();
 
                 try
                 {
                     DefaultOptions.BuildVehicleInfoDictionary();
                     VehicleOptions.Clear();
-                    DebugUtils.Log("UIMainPanel created");
+                    Logging.Message("UIMainPanel created");
                 }
                 catch
                 {
-                    DebugUtils.Log("Could not create UIMainPanel");
+                    Logging.Error("Could not create UIMainPanel");
 
                     if (instance != null)
                         GameObject.Destroy(instance.gameObject);
@@ -241,7 +288,7 @@ namespace AdvancedVehicleOptionsUID
             {
                 if (instance != null)
                     GameObject.Destroy(instance.gameObject);
-                DebugUtils.LogException(e);
+                Logging.LogException(e);
             }
         }
 
@@ -252,65 +299,72 @@ namespace AdvancedVehicleOptionsUID
         {
             try
             {
-                DebugUtils.Log("Restoring default values");
+                Logging.Message("Restoring default values");
                 DefaultOptions.RestoreAll();
                 DefaultOptions.Clear();
 
                 if (instance != null)
                     GameObject.Destroy(instance.gameObject);
 
-                AdvancedVehicleOptionsUID.isGameLoaded = false;
+                AdvancedVehicleOptions.isGameLoaded = false;
             }
             catch (Exception e)
             {
-                DebugUtils.LogException(e);
+                Logging.LogException(e);
             }
         }
         #endregion
     }
 
-    public class AdvancedVehicleOptionsUID : MonoBehaviour
+    public class AdvancedVehicleOptions : MonoBehaviour
     {
-        public const string settingsFileName = "AdvancedVehicleOptionsUID";
+        public const string settingsFileName = "AdvancedVehicleOptionsSettings";
 
-        public static SavedBool hideGUI = new SavedBool("hideGUI", settingsFileName, false, true);
-        public static SavedBool onLoadCheck = new SavedBool("onLoadCheck", settingsFileName, true, true);
-        public static SavedBool GameBalanceOptions = new SavedBool("GameBalanceOptions", settingsFileName, false, true);
-        public static SavedBool SpeedUnitOption = new SavedBool("SpeedUnitOption", settingsFileName, false, true);
-        public static SavedBool SpawnControl = new SavedBool("SpawnControl", settingsFileName, true, true);    // Internal use only
-        public static SavedBool OverrideVCX = new SavedBool("OverrideVCX", settingsFileName, true, true);
-        public static SavedBool OverrideCompatibilityWarnings = new SavedBool("OverrideCompatibilityWarnings", settingsFileName, true, true);
-        public static SavedBool ControlTruckDelivery = new SavedBool("ControlTruckDeliver", settingsFileName, true, true);
+        internal static bool AutoSaveVehicleConfig;
+        internal static bool HideGUIbutton;
+        internal static bool OnLoadValidateServices;
+        internal static bool SpeedUnitOption;
+        internal static bool ShowMoreVehicleOptions;
+        internal static bool OverrideVCX ;
+        internal static bool OverrideCompatibilityWarnings;
+        internal static bool ControlTruckDelivery;
 
-        private static GUI.UIMainPanel m_mainPanel;
+        internal static GUI.UIMainPanel m_mainPanel;
 
         private static VehicleInfo m_removeInfo;
         private static VehicleInfo m_removeParkedInfo;
 
-        private const string m_fileName = "AdvancedVehicleOptionsUID.xml";
+        private static readonly string m_OldSettingsDir = ColossalFramework.IO.DataLocation.currentDirectory;
+        private static readonly string m_OldConfigFileName = "AdvancedVehicleOptionsUID.xml";
+
+        private static readonly string m_UserSettingsDir = ColossalFramework.IO.DataLocation.localApplicationData;
+        private static string m_VehicleConfigFileName = "AdvancedVehicleOptions_VehicleData.xml";
+        internal static string m_VehicleSettingsFile = Path.Combine(m_UserSettingsDir, m_VehicleConfigFileName);
 
         public static bool isGameLoaded = false;
         public static Configuration config = new Configuration();
 
-        public void Start()
+          public void Start()
         {
             try
             {
                 // Loading config
-                AdvancedVehicleOptionsUID.InitConfig();
+                AdvancedVehicleOptions.InitVehicleDataConfig();
 
-                if (AdvancedVehicleOptionsUID.onLoadCheck)
+                if (AdvancedVehicleOptions.OnLoadValidateServices)
                 {
-                    AdvancedVehicleOptionsUID.CheckAllServicesValidity();
+                    AdvancedVehicleOptions.CheckAllServicesValidity();
                 }
 
                 m_mainPanel = GameObject.FindObjectOfType<GUI.UIMainPanel>();
                 UpdateGUI();
+
+                UIThreading.Operating = true;
             }
             catch (Exception e)
             {
-                DebugUtils.Log("UI initialization failed.");
-                DebugUtils.LogException(e);
+                Logging.Error("UI initialization failed.");
+                Logging.LogException(e);
 
                 GameObject.Destroy(gameObject);
             }
@@ -320,26 +374,56 @@ namespace AdvancedVehicleOptionsUID
         {
             if (!isGameLoaded) return;
 
-            if (!hideGUI && m_mainPanel == null)
+            if (!HideGUIbutton && m_mainPanel == null)
             {
                 // Creating GUI
                 m_mainPanel = UIView.GetAView().AddUIComponent(typeof(GUI.UIMainPanel)) as GUI.UIMainPanel;
             }
-            else if (hideGUI && m_mainPanel != null)
+            else if (HideGUIbutton && m_mainPanel != null)
             {
-                //m_mainPanel.enabled = false;	
+                // Removing GUI
                 GameObject.Destroy(m_mainPanel.gameObject);
                 m_mainPanel = null;
             }
         }
 
-        /// <summary>
-        /// Init the configuration
-        /// </summary>
-        public static void InitConfig()
+        public static void UpdateOptionPanelInfo()
+           
         {
-            // Store modded values
-            DefaultOptions.StoreAllModded();
+             if ((m_mainPanel != null) && (m_mainPanel.isVisible == true))
+            {
+                if (AdvancedVehicleOptions.AutoSaveVehicleConfig == true)
+                {
+                    m_mainPanel.m_autosave.isVisible = AutoSaveVehicleConfig;
+                }
+
+                if (AdvancedVehicleOptions.AutoSaveVehicleConfig == false)
+                {
+                    m_mainPanel.m_autosave.isVisible = AutoSaveVehicleConfig;
+                }
+
+                if (AdvancedVehicleOptions.SpeedUnitOption == false)
+                {
+                    UIOptionPanel.m_maxSpeed.text = Mathf.RoundToInt(m_mainPanel.m_optionPanel.m_options.maxSpeed * UIOptionPanel.maxSpeedToKmhConversionFactor).ToString();
+                    m_mainPanel.m_optionPanel.kmhLabel.text = Translations.Translate("AVO_MOD_OP01");
+                }   
+                
+                if (AdvancedVehicleOptions.SpeedUnitOption == true)
+                {
+                    UIOptionPanel.m_maxSpeed.text = Mathf.RoundToInt((m_mainPanel.m_optionPanel.m_options.maxSpeed / UIOptionPanel.mphFactor) * UIOptionPanel.maxSpeedToKmhConversionFactor).ToString();
+                    m_mainPanel.m_optionPanel.kmhLabel.text = Translations.Translate("AVO_MOD_OP02");
+                }
+            }
+        }
+
+/// <summary>
+/// Init the Vehicle Data Configuration (not the Mod Configuration)A
+/// </summary>
+public static void InitVehicleDataConfig()
+        {
+
+        // Store modded values
+        DefaultOptions.StoreAllModded();
 
             if (config.data != null)
             {
@@ -355,15 +439,38 @@ namespace AdvancedVehicleOptionsUID
 
                 config.options = optionsList.ToArray();
             }
-            else if (File.Exists(m_fileName))
+            else if (File.Exists(m_VehicleSettingsFile))
             {
-                // Import config
-                ImportConfig();
+                // Import config from Standard Filename
+                ImportVehicleDataConfig();
                 return;
             }
             else
             {
-                DebugUtils.Log("No configuration found. Default values will be used.");
+                // If Configuration has not been found, try to find the old config file
+                if (File.Exists(m_OldConfigFileName))
+
+                {
+                    Logging.Message("Old vehicle configuration file found. Importing  old values and converting to Filename: " + Path.Combine(m_OldSettingsDir, m_OldConfigFileName));
+
+                    m_VehicleSettingsFile = m_OldConfigFileName;
+
+                    // Import config from Old Filename and export to the new filename
+                    ImportVehicleDataConfig();
+
+                    m_VehicleSettingsFile = Path.Combine(m_UserSettingsDir, m_VehicleConfigFileName);
+                    config.Serialize(m_VehicleSettingsFile);
+
+                    Logging.Message("Old vehicle configuration file converted to new file. New Filename: " + m_VehicleSettingsFile);
+
+                    return;
+                }
+
+                else
+                {
+                    // No config file has been found at all...
+                    Logging.Message("No vehicle configuration found. Default values will be used.");
+                }
             }
 
             // Checking for new vehicles
@@ -376,26 +483,25 @@ namespace AdvancedVehicleOptionsUID
             SimulationManager.instance.AddAction(VehicleOptions.UpdateCapacityUnits);
             SimulationManager.instance.AddAction(VehicleOptions.UpdateBackEngines);
 
-            DebugUtils.Log("Configuration initialized");
+            Logging.Message("Vehicle Configuration initialized");
             LogVehicleListSteamID();
         }
 
-        /// <summary>
-        /// Import the configuration file
-        /// </summary>
-        public static void ImportConfig()
+
+/// Import the configuration file
+        public static void ImportVehicleDataConfig()
         {
-            if (!File.Exists(m_fileName))
+            if (!File.Exists(m_VehicleSettingsFile))
             {
-                DebugUtils.Log("Configuration file not found.");
+                Logging.Message("Vehicle Configuration file not found.");
                 return;
             }
 
-            config.Deserialize(m_fileName);
+            config.Deserialize(m_VehicleSettingsFile);
 
             if (config.options == null)
             {
-                DebugUtils.Log("Configuration empty. Default values will be used.");
+                Logging.Message("Vehicle Configuration empty. Default values will be used.");
             }
             else
             {
@@ -420,11 +526,11 @@ namespace AdvancedVehicleOptionsUID
             SimulationManager.instance.AddAction(VehicleOptions.UpdateCapacityUnits);
             SimulationManager.instance.AddAction(VehicleOptions.UpdateBackEngines);
 
-            DebugUtils.Log("Configuration imported");
+            Logging.Message("Vehicle Configuration imported from Filename: " + m_VehicleSettingsFile);
             LogVehicleListSteamID();
         }
 
-        public static void ResetConfig()
+        public static void ResetVehicleDataConfig()
         {  
             // Checking for conflicts
             DefaultOptions.CheckForConflicts();
@@ -433,20 +539,29 @@ namespace AdvancedVehicleOptionsUID
             SimulationManager.instance.AddAction(VehicleOptions.UpdateCapacityUnits);
             SimulationManager.instance.AddAction(VehicleOptions.UpdateBackEngines);
 
-            DebugUtils.Log("Configuration reset");
+            Logging.Message("Vehicle Configuration reset");
         }
 
         /// <summary>
         /// Export the configuration file
         /// </summary>
-        public static void ExportConfig()
+        public static void ExportVehicleDataConfig(bool isManual)
         {
-            config.Serialize(m_fileName);
-			DebugUtils.Log("Configuration exported");
-			
-            // display a message for the user in the panel			
-            ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
-            panel.SetMessage("Advanced Vehicle Options", "Your configuration has been exported. \n\nThe configuration file can be found here:\n<Steam Install Path>/steamapps/common/\nCities_Skylines/AdvancedVehicleOptionsUID.xml", false);
+            // display a message for the user in the panel, if Autosave is not active and button was pressed manually
+
+            if ((AutoSaveVehicleConfig == true) && (isManual == false))
+            {
+                Logging.Message("Vehicle Configuration will be auto-exported to Filename: " + m_VehicleSettingsFile);
+                config.Serialize(m_VehicleSettingsFile);
+            }
+
+            if (isManual == true)
+            {
+                Logging.Message("Vehicle Configuration will be exported to Filename: " + m_VehicleSettingsFile);
+                config.Serialize(m_VehicleSettingsFile);
+                ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+                panel.SetMessage("Advanced Vehicle Options", Translations.Translate("AVO_MOD_AV01") + m_VehicleSettingsFile, false);
+            }
         }
 
         public static void CheckAllServicesValidity()
@@ -454,15 +569,14 @@ namespace AdvancedVehicleOptionsUID
             string warning = "";
 
             for (int i = 0; i < (int)VehicleOptions.Category.Natural; i++)
-                if (!CheckServiceValidity((VehicleOptions.Category)i)) warning += "- " + GUI.UIMainPanel.categoryList[i + 1] + "\n";
+                if (!CheckServiceValidity((VehicleOptions.Category)i)) warning += "> " + GUI.UIMainPanel.categoryList[i + 1] + "\n";
 
             if(warning != "")
             {
-                GUI.UIWarningModal.instance.message = "The following services may not work correctly because no vehicles are allowed to spawn :\n\n" + warning;
+                GUI.UIWarningModal.instance.message = "\n" + Translations.Translate("AVO_MOD_AV02") + "\n" + "\n" + warning + "\n";
                 UIView.PushModal(GUI.UIWarningModal.instance);
                 GUI.UIWarningModal.instance.Show(true);
             }
-
         }
 
         public static bool CheckServiceValidity(VehicleOptions.Category service)
@@ -514,12 +628,12 @@ namespace AdvancedVehicleOptionsUID
             VehicleInfo info = m_removeInfo;
             Array16<Vehicle> vehicles = VehicleManager.instance.m_vehicles;
 
-            for (ushort i = 0; i < vehicles.m_buffer.Length; i++)
+            for (int i = 0; i < vehicles.m_buffer.Length; i++)
             {
                 if (vehicles.m_buffer[i].Info != null)
                 {
                     if (info == vehicles.m_buffer[i].Info)
-                        VehicleManager.instance.ReleaseVehicle(i);
+                        VehicleManager.instance.ReleaseVehicle((ushort)i);
                 }
             }
         }
@@ -529,29 +643,29 @@ namespace AdvancedVehicleOptionsUID
             VehicleInfo info = m_removeParkedInfo;
             Array16<VehicleParked> parkedVehicles = VehicleManager.instance.m_parkedVehicles;
 
-            for (ushort i = 0; i < parkedVehicles.m_buffer.Length; i++)
+            for (int i = 0; i < parkedVehicles.m_buffer.Length; i++)
             {
                 if (parkedVehicles.m_buffer[i].Info != null)
                 {
                     if (info == parkedVehicles.m_buffer[i].Info)
-                        VehicleManager.instance.ReleaseParkedVehicle(i);
+                        VehicleManager.instance.ReleaseParkedVehicle((ushort)i);
                 }
             }
         }
 
         public static void ActionRemoveExistingAll()
         {
-            for (ushort i = 0; i < VehicleManager.instance.m_vehicles.m_buffer.Length; i++)
+            for (int i = 0; i < VehicleManager.instance.m_vehicles.m_buffer.Length; i++)
             {
-                VehicleManager.instance.ReleaseVehicle(i);
+                VehicleManager.instance.ReleaseVehicle((ushort)i);
             }
         }
 
         public static void ActionRemoveParkedAll()
         {
-            for (ushort i = 0; i < VehicleManager.instance.m_parkedVehicles.m_buffer.Length; i++)
+            for (int i = 0; i < VehicleManager.instance.m_parkedVehicles.m_buffer.Length; i++)
             {
-                VehicleManager.instance.ReleaseParkedVehicle(i);
+                VehicleManager.instance.ReleaseParkedVehicle((ushort)i);
             }
         }
 
@@ -595,12 +709,11 @@ namespace AdvancedVehicleOptionsUID
             }
 
             if (config.options != null)
-                DebugUtils.Log("Found " + (optionsList.Count - config.options.Length) + " new vehicle(s)");
+                Logging.KeyMessage("Found " + (optionsList.Count - config.options.Length) + " new vehicle(s)");
             else
-                DebugUtils.Log("Found " + optionsList.Count + " new vehicle(s)");
+                Logging.KeyMessage("Found " + optionsList.Count + " new vehicle(s)");
 
             config.options = optionsList.ToArray();
-
         }
 
         private static bool ContainsPrefab(VehicleInfo prefab)
@@ -627,7 +740,7 @@ namespace AdvancedVehicleOptionsUID
             }
             steamIDs.Length--;
 
-            DebugUtils.Log(steamIDs.ToString());
+            Logging.KeyMessage(steamIDs.ToString());
         }
 
         private static bool IsAICustom(VehicleAI ai)
