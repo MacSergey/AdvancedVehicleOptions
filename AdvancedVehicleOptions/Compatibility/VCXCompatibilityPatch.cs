@@ -11,6 +11,12 @@ namespace AdvancedVehicleOptionsUID.Compatibility
             return PluginManager.instance.GetPluginsInfo().Where(x => x.isEnabled)
                 .Any(plugin => plugin.publishedFileID.AsUInt64 == 1818462177);
         }
+
+        public static bool IsACXActive()
+        {
+            return PluginManager.instance.GetPluginsInfo().Where(x => x.isEnabled)
+                .Any(plugin => plugin.publishedFileID.AsUInt64 == 2140866327);
+        }
         
         public static List<string> AVOFields = new List<string>
         {
