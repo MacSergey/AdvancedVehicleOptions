@@ -32,8 +32,10 @@ namespace AdvancedVehicleOptionsUID.GUI
         private UITextField m_color2_hex;
         private UITextField m_color3_hex;
         private UICheckBox m_enabled;
-        private UILabel m_planesize;
+        private UILabel m_parkpositionLabel;
+        private UIDropDown m_parkposition_size;
         private UICheckBox m_addBackEngine;
+        private UICheckBox m_syncTrailers;
         private UITextField m_capacity;
         private UITextField m_specialcapacity;
         private UIButton m_restore;
@@ -110,6 +112,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_turning.text = options.turning.ToString();
             m_springs.text = options.springs.ToString();
             m_dampers.text = options.dampers.ToString();
+
             m_leanMultiplier.text = options.leanMultiplier.ToString();
             m_nodMultiplier.text = options.nodMultiplier.ToString();
             m_useColors.isChecked = options.useColorVariations;
@@ -166,6 +169,19 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_capacity.parent.isVisible = false;
             }
 
+            //Configure SyncTrailer Settings
+            if (AdvancedVehicleOptions.RememberSyncTrailerSetting)
+            {
+                m_syncTrailers.isChecked = AdvancedVehicleOptions.LastSyncTrailerSetting;
+            }
+            else
+            {
+                AdvancedVehicleOptions.LastSyncTrailerSetting = false;
+                m_syncTrailers.isChecked = false;
+            }
+
+            m_syncTrailers.isVisible = ((options.isTrain) && (m_options.prefab.m_class.m_level == ItemClass.Level.Level1 || m_options.prefab.m_class.m_level == ItemClass.Level.Level2 || m_options.prefab.m_class.m_level == ItemClass.Level.Level4));
+
             //Compatibility Patch for Vehicle Color Expander - hide all controls, if mod is active. Not relating to PublicTransport only, but all vehicles
             if (VCXCompatibilityPatch.IsVCXActive())
             {
@@ -185,22 +201,24 @@ namespace AdvancedVehicleOptionsUID.GUI
             if (options.isPublicTransportGame == true)
             {
                 m_enabled.Hide();
-                m_lineoverview.Show();
                 m_userguidespawn.Show();
+                if (!options.hasTrailer)
+                {
+                    bustrailerLabel.Show();
+                    m_lineoverview.Hide();
+                }
+                else
+                {
+                    bustrailerLabel.Hide();
+                    m_lineoverview.Show();
+                }
+
                 LineOverviewType = options.ReturnLineOverviewType;
             }
             else
             {
-                if (options.ValidateIsBusTrailer)
-                {
-                    m_enabled.Hide();
-                    bustrailerLabel.isVisible = true;
-                }
-                else
-                {
-                    m_enabled.Show();
-                    bustrailerLabel.isVisible = false;
-                }
+                m_enabled.Show();
+                bustrailerLabel.Hide();
                 m_lineoverview.Hide();
                 m_userguidespawn.Hide();
             }
@@ -236,30 +254,41 @@ namespace AdvancedVehicleOptionsUID.GUI
 
             // Compatibility Patch section ends
 
-
             // Flight Stand Info introduced in Airports DLC
 
-            if ((options.prefab.m_vehicleType == VehicleInfo.VehicleType.Plane && options.prefab.m_class.m_level != ItemClass.Level.Level5))
+            if (AdvancedVehicleOptions.hasAirportDLC)
             {
-                if (options.prefab.m_class.m_level == ItemClass.Level.Level1)
+                if ((options.prefab.m_vehicleType == VehicleInfo.VehicleType.Plane && options.prefab.m_class.m_level != ItemClass.Level.Level4 && options.prefab.m_class.m_level != ItemClass.Level.Level5))
                 {
-                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP45");
+                    if (m_options.prefab.m_class.name == "Airplane Vehicle Small")
+                    {
+                        m_parkposition_size.selectedIndex = 0;
+                    }
+
+                    if (m_options.prefab.m_class.name == "Airplane Vehicle")
+                    {
+                        m_parkposition_size.selectedIndex = 1;
+                    }
+
+                    if (m_options.prefab.m_class.name == "Airplane Vehicle Large")
+                    {
+                        m_parkposition_size.selectedIndex = 2;
+                    }
+
+                    if (m_options.prefab.m_class.name == "Airplane Cargo Vehicle")
+                    {
+                        m_parkposition_size.selectedIndex = 3;
+                    }
+
+                    m_parkpositionLabel.isVisible = true;
+                    m_parkposition_size.isVisible = true;
                 }
-                if (options.prefab.m_class.m_level == ItemClass.Level.Level2)
+                else
                 {
-                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP46");
+                    m_parkpositionLabel.isVisible = false;
+                    m_parkposition_size.isVisible = false;
                 }
-                if (options.prefab.m_class.m_level == ItemClass.Level.Level3)
-                {
-                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP44"); ;
-                }
-                if (options.prefab.m_class.m_level == ItemClass.Level.Level4)
-                {
-                    m_planesize.text = Translations.Translate("AVO_MOD_OP43") + " " + Translations.Translate("AVO_MOD_OP47"); ;
-                }
-                m_planesize.isVisible = true;
-            }
-            else m_planesize.isVisible = false;
+            }      
 
             string name = options.localizedName;
             if (name.Length > 40) name = name.Substring(0, 38) + "...";
@@ -417,11 +446,11 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_useColorsLabel.text = Translations.Translate("AVO_MOD_OP20");
             m_useColorsLabel.relativePosition = new Vector3(15, 116);
 
-            // Enable & BackEngine
+            // Enable & SyncTrailer & BackEngine
             m_enabled = UIUtils.CreateCheckBox(panel);
             m_enabled.text = Translations.Translate("AVO_MOD_OP21");
+            m_enabled.width = 250;
             m_enabled.isChecked = true;
-            m_enabled.width = width - 40;
             m_enabled.tooltip = Translations.Translate("AVO_MOD_OP22");
             m_enabled.relativePosition = new Vector3(15, 195);
 
@@ -456,9 +485,29 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_capacity.tooltip = Translations.Translate("AVO_MOD_OP27");
             m_capacity.relativePosition = new Vector3(0, 21);
 
-            m_planesize = capacityPanel.AddUIComponent<UILabel>();
-            m_planesize.textScale = 0.8f;
-            m_planesize.relativePosition = new Vector3(170, 2);
+            // Sync Trailer setting
+            m_syncTrailers = UIUtils.CreateCheckBox(capacityPanel);
+            m_syncTrailers.text = Translations.Translate("AVO_MOD_OP48");
+            m_syncTrailers.height = 30;
+            m_syncTrailers.relativePosition = new Vector3(160, 15);
+            m_syncTrailers.tooltip = Translations.Translate("AVO_MOD_OP49");
+
+            // Plane Sizes and Parking Position 
+            m_parkpositionLabel = capacityPanel.AddUIComponent<UILabel>();
+            m_parkpositionLabel.textScale = 0.8f;
+            m_parkpositionLabel.text = Translations.Translate("AVO_MOD_OP43");
+            m_parkpositionLabel.relativePosition = new Vector3(170, 2);
+            m_parkpositionLabel.isVisible = AdvancedVehicleOptions.hasAirportDLC;
+
+            m_parkposition_size = UIUtils.CreateDropDown(capacityPanel);
+            m_parkposition_size.width = 100;
+            m_parkposition_size.tooltip = Translations.Translate("AVO_MOD_OP50");
+            m_parkposition_size.AddItem(Translations.Translate("AVO_MOD_OP44"));
+            m_parkposition_size.AddItem(Translations.Translate("AVO_MOD_OP45"));
+            m_parkposition_size.AddItem(Translations.Translate("AVO_MOD_OP46"));
+            m_parkposition_size.selectedIndex = 0;
+            m_parkposition_size.relativePosition = new Vector3(170, 19);
+            m_parkposition_size.isVisible = AdvancedVehicleOptions.hasAirportDLC;
 
             // Special Capacity			
             specialcapacityLabel = capacityPanel.AddUIComponent<UILabel>();
@@ -572,6 +621,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_color3_hex.eventTextSubmitted += OnColorHexSubmitted;
 
             m_enabled.eventCheckChanged += OnCheckChanged;
+            m_syncTrailers.eventCheckChanged += OnCheckChanged;
             m_addBackEngine.eventCheckChanged += OnCheckChanged;
             m_isLargeVehicle.eventCheckChanged += OnCheckChanged;
 
@@ -594,6 +644,52 @@ namespace AdvancedVehicleOptionsUID.GUI
 
                 if (m_options.enabled != isEnabled)
                     eventEnableCheckChanged(this, m_options.enabled);
+            };
+
+            m_parkposition_size.eventSelectedIndexChanged += (c, t) => 
+            {
+                if (AdvancedVehicleOptions.hasAirportDLC)
+                {
+
+                    if (!m_initialized || m_options == null) return;
+                    m_initialized = false;
+
+                    m_parkposition_size.enabled = false;
+                    m_parkpositionLabel.text = Translations.Translate("AVO_MOD_OP43") + ' ' + m_parkposition_size.selectedValue;
+                    m_parkposition_size.enabled = true;
+
+                    Logging.Message("Current ItemClass: " + m_options.prefab.m_class.name);
+
+                    if (m_parkposition_size.selectedIndex == 0)
+                    {
+                        m_options.prefab.m_class = ItemClassCollection.FindClass("Airplane Vehicle Small");
+                        m_parkpositionLabel.text = Translations.Translate("AVO_MOD_OP43") + Translations.Translate("AVO_MOD_OP44");
+                        Logging.Message("Found the required template ItemClass: " + ItemClassCollection.FindClass("Airplane Vehicle Small"));
+                        VehicleOptions.UpdateTransfertVehicles();
+                    }
+
+                    if (m_parkposition_size.selectedIndex == 1)
+                    {
+                        m_options.prefab.m_class = ItemClassCollection.FindClass("Airplane Vehicle");
+                        m_parkpositionLabel.text = Translations.Translate("AVO_MOD_OP43") + Translations.Translate("AVO_MOD_OP45");
+                        Logging.Message("Found the required template ItemClass: " + ItemClassCollection.FindClass("Airplane Vehicle"));
+                        VehicleOptions.UpdateTransfertVehicles();
+                    }
+
+                    if (m_parkposition_size.selectedIndex == 2)
+                    {
+                        m_options.prefab.m_class = ItemClassCollection.FindClass("Airplane Vehicle Large");
+                        m_parkpositionLabel.text = Translations.Translate("AVO_MOD_OP43") + Translations.Translate("AVO_MOD_OP46");
+                        Logging.Message("Found the required template ItemClass: " + ItemClassCollection.FindClass("Airplane Vehicle Large"));
+                        VehicleOptions.UpdateTransfertVehicles();
+                    }
+
+                    Logging.Message("Active Airplane ItemClass: " + m_options.prefab.m_class.name + " for " + m_options.prefab.name + " on " + m_options.prefab.m_class.m_level);
+
+                }
+
+                AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+                m_initialized = true;
             };
 
             m_clearVehicles.eventClick += OnClearVehicleClicked;
@@ -656,6 +752,20 @@ namespace AdvancedVehicleOptionsUID.GUI
             {
                 m_options.isLargeVehicle = state;
             }
+            else if (component == m_syncTrailers)
+            {
+                if (m_syncTrailers.isChecked)
+                {
+                    SyncTrailerDataToEngine();
+                }
+
+                if (AdvancedVehicleOptions.RememberSyncTrailerSetting)
+                {
+                    AdvancedVehicleOptions.LastSyncTrailerSetting = state;
+                    ModSettings.Save();
+                }
+            }
+
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
             m_initialized = true;
         }
@@ -673,6 +783,7 @@ namespace AdvancedVehicleOptionsUID.GUI
                 m_options.maxSpeed = (float.Parse(text) * mphFactor) / maxSpeedToKmhConversionFactor;
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }    
             m_initialized = true;
         }
 
@@ -684,6 +795,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.acceleration = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -695,6 +807,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.braking = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
         
@@ -706,6 +819,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.turning = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -717,6 +831,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.springs = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -728,6 +843,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.dampers = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -739,6 +855,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.leanMultiplier = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -750,6 +867,7 @@ namespace AdvancedVehicleOptionsUID.GUI
             m_options.nodMultiplier = float.Parse(text);
 
             AdvancedVehicleOptions.ExportVehicleDataConfig(m_initialized);
+            if (m_syncTrailers.isChecked) { SyncTrailerDataToEngine(); }
             m_initialized = true;
         }
 
@@ -875,6 +993,30 @@ namespace AdvancedVehicleOptionsUID.GUI
         {
             SimulationManager.instance.SimulationPaused = true;
             Application.OpenURL("https://github.com/CityGecko/CS-AdvancedVehicleOptions/wiki/02.05-Vehicle-Settings");
+        }
+
+        private void SyncTrailerDataToEngine()
+        {
+            if ((m_options.prefab.m_vehicleType == VehicleInfo.VehicleType.Train) && (m_options.prefab.m_class.m_level == ItemClass.Level.Level1 || m_options.prefab.m_class.m_level == ItemClass.Level.Level2 || m_options.prefab.m_class.m_level == ItemClass.Level.Level4))
+            { 
+                    if ((m_options.engine != null) && (m_options.hasTrailer))
+                    {
+                    for (uint i = 0; i < m_options.prefab.m_trailers.Length; i++)
+                    {
+                        if (m_options.prefab.m_trailers[i].m_info == null) continue;
+                        m_options.prefab.m_trailers[i].m_info.m_maxSpeed = m_options.prefab.m_maxSpeed;
+                        m_options.prefab.m_trailers[i].m_info.m_acceleration = m_options.prefab.m_acceleration;
+                        m_options.prefab.m_trailers[i].m_info.m_braking = m_options.prefab.m_braking;
+                        m_options.prefab.m_trailers[i].m_info.m_turning = m_options.prefab.m_turning;
+                        m_options.prefab.m_trailers[i].m_info.m_springs = m_options.prefab.m_springs;
+                        m_options.prefab.m_trailers[i].m_info.m_dampers = m_options.prefab.m_dampers;
+                        m_options.prefab.m_trailers[i].m_info.m_leanMultiplier = m_options.prefab.m_leanMultiplier;
+                        m_options.prefab.m_trailers[i].m_info.m_nodMultiplier = m_options.prefab.m_nodMultiplier;
+                    }
+                }
+            }
+
+           // hier der code fürs trailer syncen übernehmen
         }
     }
 
