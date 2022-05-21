@@ -97,6 +97,23 @@ namespace AdvancedVehicleOptionsUID
 
             set => AdvancedVehicleOptions.AutoSaveVehicleConfig = value;
         }
+ 
+       // General: Trailer Sync Settings
+       [XmlElement("RememberTrailerSync")]
+        public bool RememberSyncTrailerSettingFlag
+        {
+            get => AdvancedVehicleOptions.RememberSyncTrailerSetting;
+
+            set => AdvancedVehicleOptions.RememberSyncTrailerSetting = value;
+        }
+
+        [XmlElement("LastTrailerSync")]
+        public bool LastSyncTrailerSettingFlag
+        {
+            get => AdvancedVehicleOptions.LastSyncTrailerSetting;
+
+            set => AdvancedVehicleOptions.LastSyncTrailerSetting = value;
+        }
 
         // General: Hide the GUI Button
         [XmlElement("GUIButton")]
@@ -171,6 +188,8 @@ namespace AdvancedVehicleOptionsUID
                         Logging.Message("no settings file found");
 
                         AdvancedVehicleOptions.AutoSaveVehicleConfig = true;
+                        AdvancedVehicleOptions.RememberSyncTrailerSetting = false;
+                        AdvancedVehicleOptions.LastSyncTrailerSetting = false;
                         AdvancedVehicleOptions.HideGUIbutton = false;
                         AdvancedVehicleOptions.OnLoadValidateServices = true;
                         AdvancedVehicleOptions.SpeedUnitOption = false;
