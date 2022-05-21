@@ -19,8 +19,9 @@ namespace AdvancedVehicleOptionsUID
 
     {
     public static string ModName => "Advanced Vehicle Options";
-    //public static string Version => "1.9.7 b6 24012022";
-    public static string Version => "1.9.7";
+    //public static string Version => "1.9.8 b7 26042022 1.14.1-f2";
+
+    public static string Version => "1.9.8";
     public string Name => ModName + " " + Version;
 
     public AVOMod()
@@ -76,6 +77,16 @@ namespace AdvancedVehicleOptionsUID
                 });
 
                 ValidateMissingServices_Box.tooltip = Translations.Translate("AVO_OPT_GEN_SERVICE_TT");
+
+                // Checkbox for Trailer Sync setting
+
+                UICheckBox TrailerSync_Box = (UICheckBox)Group_General.AddCheckbox(Translations.Translate("AVO_OPT_SYNC"), AdvancedVehicleOptions.RememberSyncTrailerSetting, (b) =>
+                {
+                    AdvancedVehicleOptions.RememberSyncTrailerSetting = b;
+                    ModSettings.Save();
+                });
+
+                TrailerSync_Box.tooltip = Translations.Translate("AVO_OPT_SYNC_TT");
 
                 // Checkbox for Debug Setting
 
@@ -193,16 +204,6 @@ namespace AdvancedVehicleOptionsUID
                     NoBigTrucks_Box.enabled = false;   //Do not show the option Checkbox, if No Big Trucks is not active.
                 }
 
-                // Add Trailer Compatibility Reference
-
-                UITextField TrailerCompatibilityList_Textfield = (UITextField)Group_Compatibility.AddTextfield(Translations.Translate("AVO_OPT_COMP_TRL"), TrailerRef.Revision, (value) =>
-                {
-                    Logging.KeyMessage("Using Trailer Configuration file: "+ TrailerRef.Revision, value);
-                });
-
-                TrailerCompatibilityList_Textfield.tooltip = Translations.Translate("AVO_OPT_COMP_TRL_TT");
-                TrailerCompatibilityList_Textfield.readOnly = true;
-
  // Support Section with Wiki and Output-Log	
 
                 UIHelperBase Group_Support = helper.AddGroup(Translations.Translate("AVO_OPT_SUP"));
@@ -282,7 +283,7 @@ namespace AdvancedVehicleOptionsUID
                     return;
                 }
 
-                //new EnumerableActionThread(BrokenAssetsFix);
+                // new EnumerableActionThread(BrokenAssetsFix);
             }
             catch (Exception e)
             {
@@ -321,6 +322,8 @@ namespace AdvancedVehicleOptionsUID
         public const string settingsFileName = "AdvancedVehicleOptionsSettings";
 
         internal static bool AutoSaveVehicleConfig;
+        internal static bool RememberSyncTrailerSetting;
+        internal static bool LastSyncTrailerSetting;
         internal static bool HideGUIbutton;
         internal static bool OnLoadValidateServices;
         internal static bool SpeedUnitOption;
@@ -328,6 +331,7 @@ namespace AdvancedVehicleOptionsUID
         internal static bool OverrideVCX ;
         internal static bool OverrideCompatibilityWarnings;
         internal static bool ControlTruckDelivery;
+        internal static bool hasAirportDLC;
 
         internal static GUI.UIMainPanel m_mainPanel;
 
@@ -344,10 +348,13 @@ namespace AdvancedVehicleOptionsUID
         public static bool isGameLoaded = false;
         public static Configuration config = new Configuration();
 
-          public void Start()
+        public void Start()
         {
             try
             {
+                //Checking for Stand Type requirement: is AirportDLC installed
+                hasAirportDLC = (ColossalFramework.PlatformServices.PlatformService.IsDlcInstalled(SteamHelper.kAirportDLCAppID));
+
                 // Loading config
                 AdvancedVehicleOptions.InitVehicleDataConfig();
 

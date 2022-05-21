@@ -44,21 +44,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(MangedDLLPath)\Assembly-CSharp.dll</HintPath>
+      <HintPath>S:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColossalManaged">
-      <HintPath>$(MangedDLLPath)\ColossalManaged.dll</HintPath>
+      <HintPath>S:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ICities">
-      <HintPath>$(MangedDLLPath)\ICities.dll</HintPath>
+      <HintPath>S:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>$(MangedDLLPath)\UnityEngine.dll</HintPath>
+      <HintPath>S:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -66,7 +66,6 @@
     <Compile Include="Compatibility\IPTCompatibilityPatch.cs" />
     <Compile Include="Compatibility\NoBigTruckCompatibilityPatch.cs" />
     <Compile Include="Compatibility\TLMCompatibilityPatch.cs" />
-    <Compile Include="Compatibility\TrailerVehiclesCompatibilityPatch.cs" />
     <Compile Include="Compatibility\VCXCompatibilityPatch.cs" />
     <Compile Include="GUI\UIFastList.cs" />
     <Compile Include="GUI\UIOptionPanel.cs" />

@@ -43,6 +43,8 @@ namespace AdvancedVehicleOptionsUID
             public int specialcapacity = -1;
             [DefaultValue(false)]
             public bool isLargeVehicle = false;
+            public string classname;
+            [DefaultValue(true)]
             #endregion
 
             public bool isCustomAsset
@@ -91,6 +93,7 @@ namespace AdvancedVehicleOptionsUID
                     s.WriteInt32(options[i].capacity);
                     s.WriteInt32(options[i].specialcapacity);
                     s.WriteBool(options[i].isLargeVehicle);
+                    s.WriteUniqueString(options[i].classname);
                 }
             }
             catch (Exception e)
@@ -141,6 +144,11 @@ namespace AdvancedVehicleOptionsUID
                     {
                         data[i].specialcapacity = s.ReadInt32();             
                         data[i].isLargeVehicle = s.ReadBool();
+                    }
+
+                    if (s.version >= 4)                                         // Skip loading Special Capacity for all versions below 1.9.8
+                    {
+                        data[i].classname = s.ReadUniqueString();
                     }
                 }
             }
@@ -278,12 +286,13 @@ namespace AdvancedVehicleOptionsUID
                 data[i].capacity = options[i].capacity;
                 data[i].specialcapacity = options[i].specialcapacity;
                 data[i].isLargeVehicle = options[i].isLargeVehicle;
+                data[i].classname = options[i].classname;
             }
         }
 
         public void DataToOptions()
         {
-            if (data == null) return;
+        if (data == null) return;
 
             options = new VehicleOptions[data.Length];
 
@@ -311,8 +320,24 @@ namespace AdvancedVehicleOptionsUID
                 options[i].capacity = data[i].capacity;
                 options[i].specialcapacity = data[i].specialcapacity;
                 options[i].isLargeVehicle = data[i].isLargeVehicle;
-            }
 
+                if (options[i].prefab != null)
+                {
+                    if (AdvancedVehicleOptions.hasAirportDLC)
+                    {
+                        if ((data[i].classname != null) && (data[i].classname == "Airplane Vehicle Small" || data[i].classname == "Airplane Vehicle" || data[i].classname == "Airplane Vehicle Large"))
+                        {
+                            if (options[i].prefab.m_class != ItemClassCollection.FindClass(data[i].classname))
+                                { 
+                                 ItemClass oldClass = options[i].prefab.m_class;
+                                 options[i].prefab.m_class = ItemClassCollection.FindClass(data[i].classname);
+                                 Logging.Message("Itemclass Change successful: " + options[i].prefab.name + " / " + oldClass + " -> " + options[i].prefab.m_class.name);
+                                }
+                        }
+                    }
+                }
+            }
+                
             VehicleOptions.UpdateTransfertVehicles();
         }
     }

@@ -8,7 +8,7 @@ namespace AdvancedVehicleOptionsUID
     public class SerializableDataExtension : SerializableDataExtensionBase
     {
         private const string ID = "AVO";
-        private const int VERSION = 3;
+        private const int VERSION = 4;
 
         public override void OnLoadData()
         {

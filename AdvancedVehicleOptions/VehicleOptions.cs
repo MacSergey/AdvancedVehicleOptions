@@ -70,7 +70,7 @@ namespace AdvancedVehicleOptionsUID
 
                 VehicleInfo prefab = PrefabCollection<VehicleInfo>.FindLoaded(value);
                 if (prefab == null)
-                    Logging.Message("Couldn't find " + value);
+                    Logging.Message("Vehicle Asset not available / deactivated or unsubscribed -  " + value);
                 else
                     SetPrefab(prefab);
             }
@@ -282,6 +282,15 @@ namespace AdvancedVehicleOptionsUID
             {
                 if (m_prefab == null) return;
                 m_prefab.m_isLargeVehicle = value;
+            }
+        }
+        public string classname
+        {
+            get { return m_prefab.m_class.name; }
+            set
+            {
+                if (m_prefab == null) return;
+                m_prefab.m_class.name = value;
             }
         }
 
@@ -769,112 +778,29 @@ namespace AdvancedVehicleOptionsUID
             }
         }
 
-        public bool ValidateIsBusTrailer
-        {
-            get
-            {
-                if (hasTrailer == false && prefab.m_class.m_service == ItemClass.Service.Industrial)
-                {
-                    for (int i = 0; i < TrailerRef.isBus.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isBus[i])
-                            return true;
-                    }
-
-                    for (int i = 0; i < TrailerRef.isTrolley.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isTrolley[i])
-                            return true;
-                    }
-
-                    for (int i = 0; i < TrailerRef.isPark.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isPark[i])
-                            return true;
-                    }
-                }
-                return false;
-            }
-        }
-
     public Category category
         {
 	        get
             {
                 if (prefab == null) return Category.None;
-					
-				// Categorizing Bus, Trolley Bus, Fire Engine and Police Car trailers, which are actual created from Industrial trailers.
-				// The game does not support Bus trailers, so asset creators attaching Industrial trailers to the Bus.	
-				// Checking, if the vehicle has a trailer (if not, it is a trailer itself) and if Service is Industrial. Then read out 
-				// TrailerRef SteamIDs from patch file and verify against the current SteamID.
-				
-				if (hasTrailer == false && prefab.m_class.m_service == ItemClass.Service.Industrial)
-				{
-					for (int i=0; i < TrailerRef.isBus.Length; i++) 
-					{            
-						if (steamID == TrailerRef.isBus[i])
-				            return Category.TransportBus;			
-					}
 
-                    //	Preparation for Ninjanoobslayers upcoming Vehicle/Trailer combinations
-                    //				
-                    //	for (int i=0; i < TrailerRef.isPolice.Length; i++) 
-                    //		{            
-                    //	 	    if (steamID == TrailerRef.isPolice[i])
-                    //	            return Category.Police;			
-                    //	    }
-                    //	
-                    				
-                    for (int i = 0; i < TrailerRef.isFire.Length; i++)
+                // Re-Categorizing the Trailer logic, now validating engine service class against trailer service class, then replacing.
+
+                if (hasTrailer)
+                {
+                    for (uint i = 0; i < m_prefab.m_trailers.Length; i++)
                     {
-                        if (steamID == TrailerRef.isFire[i])
-                            return Category.FireSafety;
-                    }
+                        if (m_prefab.m_trailers[i].m_info == null) continue;
 
-                    for (int i = 0; i < TrailerRef.isPark.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isPark[i])
-                            return Category.TransportTours;
-                    }
-
-                    for (int i = 0; i < TrailerRef.isTrolley.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isTrolley[i])
-                            return Category.TrolleyBus;
-                    }
-
-                    for (int i=0; i < TrailerRef.isOil.Length; i++) 
-					{            
-						if (steamID == TrailerRef.isOil[i])
-				            return Category.Oil;			
-					}
-
-					for (int i=0; i < TrailerRef.isForestry.Length; i++) 
-					{            
-						if (steamID == TrailerRef.isForestry[i])
-				            return Category.Forestry;			
-					}
-
-                    for (int i = 0; i < TrailerRef.isOre.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isOre[i])
-                            return Category.Ore;
-                    }
-
-                    for (int i = 0; i < TrailerRef.isPostal.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isPostal[i])
-                            return Category.TransportPost;
-                    }
-
-
-                    for (int i = 0; i < TrailerRef.isGeneric.Length; i++)
-                    {
-                        if (steamID == TrailerRef.isGeneric[i])
-                            return Category.IndustryGeneric;
+                        if (m_prefab.m_class.m_service != m_prefab.m_trailers[i].m_info.m_class.m_service)
+                        {
+                            Logging.Message("Service Change required / Engine: " + m_prefab.name + " is " + m_prefab.m_class.m_service + " / Trailer : " + m_prefab.m_trailers[i].m_info.name + " is " + m_prefab.m_trailers[i].m_info.m_class.m_service);                            
+                            m_prefab.m_trailers[i].m_info.m_class = m_prefab.m_class;
+                            Logging.Message("Service Change successful / Trailer : " + m_prefab.m_trailers[i].m_info.name + " reclassified to " + m_prefab.m_trailers[i].m_info.m_class.m_service);
+                        }
                     }
                 }
-				
+
                 switch (prefab.m_class.m_service)
                 {
                     case ItemClass.Service.PoliceDepartment:
@@ -1524,6 +1450,12 @@ namespace AdvancedVehicleOptionsUID
                     details.Append("isLargeVehicle, ");
                 }
 
+                if (modded.m_classname != stored.m_classname && options.classname == stored.m_classname)
+                {
+                    options.classname = modded.m_classname;
+                    details.Append("ItemClass Name, ");
+                }
+
                 if (details.Length > 0)
                 {
                     details.Length -= 2;
@@ -1567,6 +1499,7 @@ namespace AdvancedVehicleOptionsUID
             options.specialcapacity = stored.m_specialcapacity;
             options.isLargeVehicle = stored.m_isLargeVehicle;
             prefab.m_placementStyle = stored.m_placementStyle;
+            prefab.m_class.name = stored.m_classname;
         }
 
         public static void RestoreAll()
@@ -1608,6 +1541,7 @@ namespace AdvancedVehicleOptionsUID
             m_specialcapacity = options.specialcapacity;  
             m_placementStyle = options.placementStyle;
             m_isLargeVehicle = options.isLargeVehicle;
+            m_classname = prefab.m_class.name;
 
             if (prefab.m_trailers != null && prefab.m_trailers.Length > 0)
             {
@@ -1637,5 +1571,6 @@ namespace AdvancedVehicleOptionsUID
         private VehicleInfo m_lastTrailer;
         private int m_probability;
         private bool m_isLargeVehicle;
+        private string m_classname;
     }
 }
